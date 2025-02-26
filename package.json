@@ -1,0 +1,49 @@
+{
+  "name": "rag-system-v2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "node scripts/script2.mjs",
+    "test": "node scripts/test.mjs",
+    "image": "node scripts/imageExtraction.mjs"
+  },
+  "dependencies": {
+    "@datastax/astra-db-ts": "^1.5.0",
+    "@google/generative-ai": "^0.21.0",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@react-spring/web": "^9.7.5",
+    "ai": "^3.1.0",
+    "axios": "^1.7.9",
+    "bcryptjs": "^3.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
+    "langchain": "^0.1.36",
+    "lucide-react": "^0.475.0",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.10.1",
+    "next": "15.1.7",
+    "next-auth": "^4.24.11",
+    "ogl": "^1.0.11",
+    "pdfjs-dist": "^4.10.38",
+    "puppeteer": "^19.11.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "daisyui": "^4.12.23",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.7",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
