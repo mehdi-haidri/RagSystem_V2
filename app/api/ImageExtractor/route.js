@@ -14,14 +14,13 @@ Go over the the clinical report and identify biomarkers that show slight or larg
 
 export async function POST(req) { 
     
-    const base64Image = req.body.base64Image;
-
+    const { base64Image } = await req.json();
     const imagePart = fileToGenerativePart(base64Image);
-
     const generatedContent = await model.generateContent([prompt, imagePart]);
 
     const textResponse = generatedContent.response.candidates[0].content.parts[0].text;
-     return new Response(textResponse, { status: 200 })
+    console.log(textResponse);
+     return  Response.json(textResponse, { status: 200 })
 
 }
 

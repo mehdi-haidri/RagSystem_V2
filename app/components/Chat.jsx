@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import AiImage from "../assets/Ai.jpg"
+import MarkDown from "./MarkDown"
 
 
 
@@ -26,7 +27,9 @@ function Chat({ messages , theme}) {
              <p className="font-semibold mr-2 inline">Ai</p> 
             <time className="text-xs opacity-50">{new Date(message.created_at).getHours()} : {new Date(message.created_at).getMinutes()}</time>
             </div>
-          <div className={ theme.chatBuble +" chat-bubble " + theme.chatText}>{message.content}</div>
+            <div className={theme.chatBuble + " chat-bubble "}>
+              <MarkDown text={message.content}></MarkDown>
+          </div>
             <div className="chat-footer opacity-50">Delivered</div>
           </div>)
       :

@@ -8,7 +8,7 @@ import Chat from "../components/Chat";
 import Swap from "../components/Swap";
 import Menu from "../components/Menu";
 import { useSession } from "next-auth/react";
-import {Themes} from "../assets/Themes";
+import { Themes } from "../assets/Themes";
 import Drawer from "../components/ReportScanner/Drawer";
 async function readStream(response, setMessages) {
   const reader = response.body.getReader();
@@ -51,7 +51,7 @@ const createChat = (setCurrentChat, setMessages, user_id) => {
   fetch("/api/chats", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id: user_id , label: "New Chat"}),
+    body: JSON.stringify({ user_id: user_id, label: "New Chat" }),
   })
     .then((res) => res.json())
     .then((res) => {
@@ -127,9 +127,9 @@ const updateChatLabel = async (chat_id, label) => {
   }
 };
 
-
 function Page() {
   const chatRef = useRef(null);
+  const [ConfirmedReport, setConfirmedReport] = useState("");
   const [theme, setTheme] = useState(Themes.dark);
   const { data: session, status } = useSession();
   const [isDark, setIsDark] = useState(true);
@@ -158,26 +158,30 @@ function Page() {
 
     if (status === "authenticated") {
       getChats(setChats, setCurrentChat, setMessages, session.user.id);
-      
     }
-   
   }, [status]);
 
   useEffect(() => {
     ScrollDown();
-  },[messages])
+  }, [messages]);
   const ScrollDown = () => {
-    chatRef.current.scrollTo({ top: chatRef.current.scrollHeight, behavior: "smooth" })
-  }
- 
+    chatRef.current.scrollTo({
+      top: chatRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   const toggleTheme = () => {
     setTheme(isDark ? Themes.light : Themes.dark);
     setIsDark(!isDark);
-  }
-
+  };
 
   return (
-    <div className={"w-full h-screen   flex flex-row relative " +theme.chatBackground  }  >
+    <div
+      className={
+        "w-full h-screen   flex flex-row relative " + theme.chatBackground
+      }
+    >
       <nav>
         <Menu
           currentChat={currentChat}
@@ -192,64 +196,90 @@ function Page() {
         ></Menu>
       </nav>
       <main
-        className={ " gap-2 px-2 lg:px-[10%]  lg:w-[80%] m-auto " +theme.chatBackground}
+        className={
+          " gap-2 px-2 lg:px-[10%]  lg:w-[80%] m-auto relative " + theme.chatBackground
+        }
       >
         <Swap onclick={() => toggleTheme()}></Swap>
-        {!isDark ? <Image src={logoLight} alt="Logo"  className="mt-[10%]" width={200} /> :
-        <Image src={logo} alt="Logo"  className="mt-[10%]" width={200} />}
-
+        {!isDark ? (
+          <Image src={logoLight} alt="Logo" className="mt-[10%]" width={200} />
+        ) : (
+          <Image src={logo} alt="Logo" className="mt-[10%]" width={200} />
+        )}
+        { ConfirmedReport && <div className="toast  absolute left-0 top-1 h-fit  w-fit">
+          <div className="alert  alert-success text-gray-800 px-2 py-1.5  font-semibold font-sans w-fit">
+            
+            <svg className="w-4 h-4 text-gray-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
+            </svg>
+            <p>Repport Added</p>
+            
+          </div>
+        </div>}
         <section ref={chatRef}>
           {/* Render Chat component only if there are messages */}
           {messages.length > 0 ? (
             <Chat theme={theme} messages={messages} />
           ) : (
             <div className="flex inline gap-2 flex-wrap justify-center mt-[10%]">
-                <div className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer  text-semibold font-sans `}>
+              <div
+                className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer  text-semibold font-sans `}
+              >
                 <span>New mail arrived</span>
               </div>
-              <div className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}>
-              <span>Message sent successfully</span>
+              <div
+                className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}
+              >
+                <span>Message sent successfully</span>
               </div>
-              <div className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}>
-              <span>Message sent successfully</span>
+              <div
+                className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}
+              >
+                <span>Message sent successfully</span>
               </div>
-              <div className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}>
-              <span>Message sent successfhgqshs jdezjgf ezjfghzef zegeg gf d ully</span>
+              <div
+                className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}
+              >
+                <span>
+                  Message sent successfhgqshs jdezjgf ezjfghzef zegeg gf d ully
+                </span>
               </div>
             </div>
           )}
         </section>
 
-        <div className="flex gap-2 w-[80%]">
-        <form
-          onSubmit={(e) => {
-            handleSubmit(e);
-            createMessage("user", input, currentChat);
-          }}
-          className="flex gap-2 chat-form   justify-center"
-        >
-          <input
-          className={theme.chatInputBackground+" input input-bordered  w-full " + theme.inputText}
-            type="text"
-            onChange={handleInputChange}
-            value={input}
-            placeholder="Type your question ... "
-       
-          />
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={theme.chatInputBackground + "  btn btn-outline " + theme.inputText }
-
+        <div className="flex gap-2 w-[80%] h-fit">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit(e, { data: {ConfirmedReport: ConfirmedReport } });
+              createMessage("user", input, currentChat);
+            }}
+            className={`flex gap-2 p-2 chat-form flex-col border-gray-600 rounded-lg ${theme.chatInputBackground}  justify-center border-2 w-full`}
           >
-            {" "}
-            {isLoading ? "Sending..." : "Send"}
-          </button>
-        </form>
-        <Drawer></Drawer>
-
+            <input
+              className={
+                " input  w-full  bg-transparent focus:outline-none overflow-break-all " +
+                theme.inputText
+              }
+              type="text"
+              onChange={handleInputChange}
+              value={input}
+              placeholder="Type your question ... "
+            />
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={
+                " bg-gray-600 btn btn-outline font-semibold text-lg font-system  w-fit ml-auto text-black "
+              }
+            >
+              {" "}
+              {isLoading ? "Sending..." : "Send 🤞"}
+            </button>
+          </form>
+          <Drawer setConfirmedReport={setConfirmedReport}></Drawer>
         </div>
-        
       </main>
     </div>
   );

@@ -3,8 +3,8 @@
 import { Themes } from "@/app/assets/Themes"
 import Rr from "next/image";
 import { useState } from "react";
-function ImageUpload() {
-    const [base64String, setBase64Data] = useState(null);
+function ImageUpload({setBase64Data}) {
+  
     const [file, setFile] = useState(null);
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -28,7 +28,6 @@ function ImageUpload() {
             reader.onloadend = () => {
                 const base64String = reader.result ;
                 setBase64Data(base64String);
-                console.log(base64String);
             };
             reader.readAsDataURL(compressedFile);
         });

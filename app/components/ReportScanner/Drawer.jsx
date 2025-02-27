@@ -5,8 +5,44 @@ import ImageUpload from "./ImageUpload";
 import ReportText from "./ReportText";
 import { Themes } from "@/app/assets/Themes";
 
-function Drawer() {
+function Drawer({setConfirmedReport}) {
   const [open, setOpen] = useState(false);
+  const [base64String, setBase64Data] = useState(null);
+  const [reportData, setReportData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  const handleImageExtraction = async () => {
+    setIsLoading(true);
+    if (!base64String) {
+      alert("Please upload an image first");
+      setIsLoading(false);
+      return
+    }
+    console.log(base64String);
+
+    try {
+        
+      const response = await fetch("/api/ImageExtractor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ base64Image : base64String }),
+      })
+
+      if (!response.ok) throw new Error("Network response was not ok");
+      
+      const data = await response.json();
+      setReportData(data)
+      }catch (error) {
+        console.error(error);
+      }
+      setIsLoading(false);
+
+
+  }
+
   return (
     <>
       <div className="text-center">
@@ -70,20 +106,20 @@ function Drawer() {
         </h5>
 
         
-        <ImageUpload></ImageUpload>
+        <ImageUpload setBase64Data={setBase64Data}></ImageUpload>
 
         <div className="grid  w-full">
-          <a
-            href="#"
-            className={`px-4 w-full py-2 text-lg   font-semibold text-center text-white ${Themes.dark.chatBackground} border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-600 hover:text-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-100 `}
+         <button
+            onClick={()=>{ handleImageExtraction()}}
+            className={`px-4 w-full py-2 ${isLoading && 'py-0' } text-lg   font-semibold text-center text-white ${Themes.dark.chatBackground} border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-600 hover:text-gray-800  `}
           >
-            Analyze
-          </a>  
+            {isLoading ? <span className="loading loading-infinity loading-lg p-0"></span> : "Analyze"}
+          </button>  
         </div>
-        <ReportText></ReportText>
+        <ReportText setConfirmedReport={setConfirmedReport} reportData={reportData} setReportData={setReportData}></ReportText>
       </div>
     </>
   );
 }
 
-export default Drawer;
+export default Drawer
