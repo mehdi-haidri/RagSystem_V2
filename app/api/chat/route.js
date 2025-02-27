@@ -69,24 +69,38 @@ export async function POST(request) {
     const template = {
       role: "user",
       parts: [{
-        text: `Here is a summary of a patient's clinical report, and a user query. Some generic clinical findings are also provided that may or may not be relevant for the report.
-Go through the clinical report and answer the user query.
-Ensure the response is factually accurate, and demonstrates a thorough understanding of the query topic and the clinical report.
-Before answering you may enrich your knowledge by going through the provided clinical findings. 
-The clinical findings are generic insights and not part of the patient's medical report. Do not include any clinical finding if it is not relevant for the patient's case.
+        text: `You are provided with a **summary of a patient's clinical report**, a **user query**, and **generic clinical insights** that may or may not be relevant to the report.  
 
-\n\n**Patient's Clinical report summary:** \n${confirmedReport}. 
-\n**end of patient's clinical report** 
+### **Instructions:**  
+- Carefully analyze the clinical report before answering the user's query.  
+- Use the provided **generic clinical findings** only if they are relevant to the patient's case. **Do not include unrelated insights.**  
+- Ensure your response is **factually accurate, well-justified, and demonstrates a deep understanding** of both the query and the clinical report.  
+- If necessary, enrich your knowledge by referring to the generic clinical findings before formulating your response.  
+- **Do not rephrase or restate the user's query unless necessary for clarity.**  
+- **Provide a thorough, well-supported justification for your answer.**  
 
-\n\n**User Query:**\n${latestMessage}?
-\n**end of user query** 
+---
 
-\n\n**Generic Clinical findings:**
-\n\n${docContext}. 
-\n\n**end of generic clinical findings** 
+### **Patient's Clinical Report Summary:**  
+${confirmedReport}  
+**(End of Patient's Clinical Report Summary)**  
 
-\n\nProvide thorough justification for your answer and add breakline after ':' and  don't remention the user's query only if nedded.
-\n\n**Answer:**
+---
+
+### **User Query:**  
+${latestMessage}  
+**(End of User Query)**  
+
+---
+
+### **Relevant Clinical Findings (if applicable):**  
+${docContext}  
+**(End of Clinical Findings)**  
+
+---
+
+### **Fact-Based Answer with Justification:**  
+
 `}]
     };
     

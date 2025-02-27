@@ -27,7 +27,7 @@ export const authOptions = {
           throw new Error("Invalid password");
         }
 
-        return { id: user._id, email: user.email, name: user.username };
+        return { id: user._id, email: user.email, name: user.username  };
       },
     }),
     GoogleProvider({
@@ -41,11 +41,9 @@ export const authOptions = {
         // Handle Google sign-in
         await DbConnection();
         let existingUser = await User.findOne({ email: profile.email });
-
         if (!existingUser) {
           const randomPassword = Math.random().toString(36).slice(-16);
           const hashedPassword = await bcrypt.hash(randomPassword, 10);
-
           // Create a new user for Google sign-in
           existingUser = await User.create({
             email: profile.email,
@@ -56,7 +54,9 @@ export const authOptions = {
         }
 
         user.id = existingUser._id;
-      
+        user.image = profile.picture;
+        console.log(profile);
+        console.log(user);
       }
 
       // For credentials sign-in, no additional logic is needed here

@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState } from "react";
 import { useChat } from "ai/react";
 import Image from "next/image";
 import logo from "../assets/logo.png";
@@ -129,6 +129,7 @@ const updateChatLabel = async (chat_id, label) => {
 
 function Page() {
   const chatRef = useRef(null);
+  const [ showLodingBubble, setShowLodingBubble] = useState(false);
   const [ConfirmedReport, setConfirmedReport] = useState("");
   const [theme, setTheme] = useState(Themes.dark);
   const { data: session, status } = useSession();
@@ -146,6 +147,7 @@ function Page() {
   } = useChat({
     api: "/api/chat",
     onResponse: async (response) => {
+      setShowLodingBubble(false);
       const message = await readStream(response, setMessages);
       createMessage("system", message, currentChat);
       updateChatLabel(currentChat, message.slice(0, 40));
@@ -197,15 +199,15 @@ function Page() {
       </nav>
       <main
         className={
-          " gap-2 px-2 lg:px-[10%]  lg:w-[80%] m-auto relative " + theme.chatBackground
+          " gap-2 px-2 lg:px-[10%]  lg:w-[80%] pt-[5%] m-auto relative " + theme.chatBackground
         }
       >
         <Swap onclick={() => toggleTheme()}></Swap>
-        {!isDark ? (
-          <Image src={logoLight} alt="Logo" className="mt-[10%]" width={200} />
+        {messages.length == 0 && (!isDark ? (
+          <Image src={logoLight} alt="Logo" className="w-[20%]" width={200} />
         ) : (
-          <Image src={logo} alt="Logo" className="mt-[10%]" width={200} />
-        )}
+          <Image src={logo} alt="Logo" className=" w-[20%]" width={200} />
+        ))}
         { ConfirmedReport && <div className="toast  absolute left-0 top-1 h-fit  w-fit">
           <div className="alert  alert-success text-gray-800 px-2 py-1.5  font-semibold font-sans w-fit">
             
@@ -216,10 +218,10 @@ function Page() {
             
           </div>
         </div>}
-        <section ref={chatRef}>
+        <section className="h-full " ref={chatRef}>
           {/* Render Chat component only if there are messages */}
           {messages.length > 0 ? (
-            <Chat theme={theme} messages={messages} />
+            <Chat isLoading={showLodingBubble} theme={theme} messages={messages} />
           ) : (
             <div className="flex inline gap-2 flex-wrap justify-center mt-[10%]">
               <div
@@ -252,6 +254,7 @@ function Page() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              setShowLodingBubble(true);
               handleSubmit(e, { data: {ConfirmedReport: ConfirmedReport } });
               createMessage("user", input, currentChat);
             }}
