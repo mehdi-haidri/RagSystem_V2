@@ -26,11 +26,8 @@ export async function POST(request) {
 
     const messages = body.messages;
     const confirmedReport = body.data.ConfirmedReport;
-    
 
-   
-
-    if (!messages || messages.length === 0 || confirmedReport==="") {
+    if (!messages || messages.length === 0) {
       return new Response(JSON.stringify({ error: "No messages provided" }), { 
         status: 400 
       });
@@ -71,8 +68,9 @@ export async function POST(request) {
       parts: [{
         text: `You are provided with a **summary of a patient's clinical report**, a **user query**, and **generic clinical insights** that may or may not be relevant to the report.  
 
-### **Instructions:**  
-- Carefully analyze the clinical report before answering the user's query.  
+### **Instructions:**
+- you are a **medical chatbot**.
+- Carefully analyze the clinical report if there was one before answering the user's query. 
 - Use the provided **generic clinical findings** only if they are relevant to the patient's case. **Do not include unrelated insights.**  
 - Ensure your response is **factually accurate, well-justified, and demonstrates a deep understanding** of both the query and the clinical report.  
 - If necessary, enrich your knowledge by referring to the generic clinical findings before formulating your response.  

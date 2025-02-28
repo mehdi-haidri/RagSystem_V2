@@ -2,6 +2,7 @@
 import { signIn  ,useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import {  RiGoogleFill } from "@remixicon/react";
 
 
 import { Button } from "@/components/ui/button";
@@ -51,7 +52,7 @@ export default function LoginPage({children}) {
   return (
 
   
-    <Dialog  >
+    <Dialog   >
       {children}
       <DialogContent className="bg-[#1d232a] border-none">
         <div className="flex flex-col items-center gap-2">
@@ -60,7 +61,7 @@ export default function LoginPage({children}) {
             aria-hidden="true"
           >
             <svg
-              className="stroke-zinc-800 dark:stroke-zinc-100"
+              className="stroke-zinc-800 dark:stroke-zinc-100 "
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -71,7 +72,7 @@ export default function LoginPage({children}) {
             </svg>
           </div>
           <DialogHeader>
-            <DialogTitle className="sm:text-center">Welcome back</DialogTitle>
+            <DialogTitle className="sm:text-center text-gray-200 text-lg ">Welcome back</DialogTitle>
             <DialogDescription className="sm:text-center">
               Enter your credentials to login to your account.
             </DialogDescription>
@@ -82,9 +83,9 @@ export default function LoginPage({children}) {
              
           <div className="space-y-4">
             <div className="space-y-2  ">
-                <Label className="text-white" htmlFor={`${id}-email`}>Email</Label>
+                <Label className="text-white text-lg" htmlFor={`${id}-email`}>Email</Label>
               <Input 
-                className="input input-bordered "
+                className="input input-bordered p-5 text-md  "
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     id={`${id}-email`}
@@ -93,8 +94,9 @@ export default function LoginPage({children}) {
               
             </div>
             <div className="space-y-2">
-                <Label className="text-white" htmlFor={`${id}-password`}>Password</Label>
-                <Input
+                <Label className="text-white text-lg" htmlFor={`${id}-password`}>Password</Label>
+              <Input
+                className="p-5 text-md "
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 id={`${id}-password`}
@@ -107,16 +109,16 @@ export default function LoginPage({children}) {
           <div className="flex justify-between gap-2">
             <div className="flex items-center gap-2">
          
-              <Label htmlFor={`${id}-remember`} className="font-normal text-muted-foreground">
+              <Label htmlFor={`${id}-remember`} className="font-normal text-md text-muted-foreground">
                 Remember me
               </Label>
             </div>
-            <a className="text-sm underline hover:no-underline" href="#">
+            <a className="text-md text-gray-400 underline hover:no-underline" href="#">
               Forgot password?
             </a>
           </div>
           <Button type="submit" className="w-full">
-           {isLoading ? <span className="loading loading-ring loading-md"></span> : "Sign in"}
+           {isLoading ? <span className="loading loading-ring loading-md"></span> : <p className="text-lg">Sign in</p>}
           </Button>
         </form>
 
@@ -124,11 +126,17 @@ export default function LoginPage({children}) {
           <span className="text-xs text-muted-foreground">Or</span>
         </div>
 
-        <Button variant="outline" onClick={() => {
+        <Button className="bg-[#DB4437] text-white after:flex-1 hover:bg-[#DB4437]/90" onClick={() => {
           signIn("google", { callbackUrl: "/chatbot" })
           setIsLoading(true);  }}>
-         { isLoading ? <span className="loading loading-ring loading-md"></span> : "Login with Google" }
+          {isLoading ? <span className="loading loading-ring loading-md"></span> :
+            (<><span className="pointer-events-none me-2 flex-1">
+              <RiGoogleFill className="opacity-60" size={16} aria-hidden="true" />
+            </span>
+          <p className="text-md">Login with Google</p> </>)
+          }
         </Button>
+       
       </DialogContent>
     </Dialog>
 

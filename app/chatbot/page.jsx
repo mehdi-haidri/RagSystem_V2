@@ -10,6 +10,7 @@ import Menu from "../components/Menu";
 import { useSession } from "next-auth/react";
 import { Themes } from "../assets/Themes";
 import Drawer from "../components/ReportScanner/Drawer";
+import Alert from "../components/Alert";
 async function readStream(response, setMessages) {
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
@@ -72,7 +73,8 @@ const getChats = (
   setCurrentChat,
   setMessages,
   user_id,
-  currentChat = null
+  setAlert,
+  currentChat = null,
 ) => {
   fetch("/api/chats?user_id=" + user_id)
     .then((res) => res.json())
@@ -84,6 +86,9 @@ const getChats = (
       } else {
         createChat(setCurrentChat, setMessages, user_id);
       }
+    }).catch(res => {
+      setChats([]);
+      setAlert({ Message :'somthing went wrong' , type : "alert-warning"});
     });
 };
 
@@ -129,6 +134,7 @@ const updateChatLabel = async (chat_id, label) => {
 
 function Page() {
   const chatRef = useRef(null);
+  const [alert, setAlert] = useState(null);
   const [ showLodingBubble, setShowLodingBubble] = useState(false);
   const [ConfirmedReport, setConfirmedReport] = useState("");
   const [theme, setTheme] = useState(Themes.dark);
@@ -148,6 +154,10 @@ function Page() {
     api: "/api/chat",
     onResponse: async (response) => {
       setShowLodingBubble(false);
+      if (response.status !== 200) {
+        console.log("Error:", response.statusText);
+        return;
+      }
       const message = await readStream(response, setMessages);
       createMessage("system", message, currentChat);
       updateChatLabel(currentChat, message.slice(0, 40));
@@ -159,7 +169,7 @@ function Page() {
     // createChat();
 
     if (status === "authenticated") {
-      getChats(setChats, setCurrentChat, setMessages, session.user.id);
+      getChats(setChats, setCurrentChat, setMessages, session.user.id , setAlert);
     }
   }, [status]);
 
@@ -184,6 +194,7 @@ function Page() {
         "w-full h-screen   flex flex-row relative " + theme.chatBackground
       }
     >
+      {alert && <Alert message={alert.Message} setAlert={setAlert} type={alert.type} />}
       <nav>
         <Menu
           currentChat={currentChat}
@@ -220,7 +231,7 @@ function Page() {
         </div>}
         <section className="h-full " ref={chatRef}>
           {/* Render Chat component only if there are messages */}
-          {messages.length > 0 ? (
+          {messages?.length > 0 ? (
             <Chat isLoading={showLodingBubble} theme={theme} messages={messages} />
           ) : (
             <div className="flex inline gap-2 flex-wrap justify-center mt-[10%]">
@@ -281,7 +292,7 @@ function Page() {
               {isLoading ? "Sending..." : "Send 🤞"}
             </button>
           </form>
-          <Drawer setConfirmedReport={setConfirmedReport}></Drawer>
+          <Drawer setAlert={setAlert} setConfirmedReport={setConfirmedReport}></Drawer>
         </div>
       </main>
     </div>

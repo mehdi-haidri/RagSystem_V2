@@ -5,7 +5,7 @@ import ImageUpload from "./ImageUpload";
 import ReportText from "./ReportText";
 import { Themes } from "@/app/assets/Themes";
 
-function Drawer({setConfirmedReport}) {
+function Drawer({setConfirmedReport ,setAlert}) {
   const [open, setOpen] = useState(false);
   const [base64String, setBase64Data] = useState(null);
   const [reportData, setReportData] = useState(null);
@@ -36,7 +36,7 @@ function Drawer({setConfirmedReport}) {
       const data = await response.json();
       setReportData(data)
       }catch (error) {
-        console.error(error);
+        setAlert({ Message :'Somthing went wrong' , type : 'warnning'});
       }
       setIsLoading(false);
 
@@ -106,7 +106,7 @@ function Drawer({setConfirmedReport}) {
         </h5>
 
         
-        <ImageUpload setBase64Data={setBase64Data}></ImageUpload>
+        <ImageUpload setAlert={setAlert} setBase64Data={setBase64Data}></ImageUpload>
 
         <div className="grid  w-full">
          <button

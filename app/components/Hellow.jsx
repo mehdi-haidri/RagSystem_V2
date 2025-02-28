@@ -17,8 +17,20 @@ export default function Hellow() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4">
             <SplitText
             text="Welcome, to ChatBot!"
-            className="text-5xl font-semibold text-center "
+            className="text-5xl font-semibold text-gray-200 text-center "
             delay={150}
+            animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+            animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+            easing="easeOutCubic"
+            threshold={0.2}
+            rootMargin="-50px"
+            onLetterAnimationComplete={() => handleAnimationComplete(setIsHovered)}
+        />
+        
+        <SplitText
+            text="this is a medical chaBot  "
+            className="text-xl font-semibold text-gray-400 text-center "
+            delay={50}
             animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
             animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
             easing="easeOutCubic"
@@ -32,12 +44,12 @@ export default function Hellow() {
                 {isHovered && <>
                     <LoginPage >
                             <DialogTrigger asChild>
-                            <Button  variant="outline" className="mr-2 bg-black">Sign in</Button>
+                            <Button  variant="outline" className="mr-2 text-md font-semibold bg-gray-200">Sign in</Button>
                             </DialogTrigger>
                     </LoginPage>
                     <SignupPage>
                             <DialogTrigger asChild>
-                              <Button variant="outline" className="mr-2 bg-black">
+                              <Button variant="outline" className="mr-2 text-md font-semibold bg-gray-200">
                   Sign Up
                   <svg className="ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 20">
                     <path fill="currentColor"
