@@ -43,13 +43,13 @@ function Chat({ messages , theme , isLoading }) {
               </div>
             </div>
             <div className="chat-header">
-             <p className="font-semibold mr-2 inline">Ai</p> 
-            <time className="text-xs opacity-50">{new Date(message.created_at).getHours()} : {new Date(message.created_at).getMinutes()}</time>
+              <p className={"font-semibold mr-2 opacity-50 inline " + theme.chatState}>Ai</p> 
+            <time className={"text-xs opacity-80 "+ theme.chatState }>{new Date(message.created_at).getHours()} : {new Date(message.created_at).getMinutes()}</time>
             </div>
             <div className={theme.chatBuble + " chat-bubble "}>
               <MarkDown text={message.content}></MarkDown>
           </div>
-            <div className="chat-footer opacity-50">Delivered</div>
+            <div className={"chat-footer opacity-50 "  + theme.chatState}>Delivered</div>
           </div>)
       :
           (<div key={i} className={"chat chat-end "}>
@@ -61,11 +61,11 @@ function Chat({ messages , theme , isLoading }) {
               </div>
             </div>
             <div className="chat-header">
-            <p className="font-semibold mr-2 inline">Ai</p> 
-              <time className="text-xs opacity-50">{new Date(message.created_at).getHours()} : {new Date(message.created_at).getMinutes()}</time>
+            <p className={"font-semibold mr-2 opacity-50 inline " + theme.chatState}>You</p> 
+              <time className={"text-xs opacity-80 "+ theme.chatState }>{new Date(message.created_at).getHours()} : {new Date(message.created_at).getMinutes()}</time>
             </div>
             <div className={ theme.chatBuble +" chat-bubble " + theme.chatText}> {message.content}</div>
-            <div className="chat-footer opacity-50">Delivered</div>
+            <div className={"chat-footer opacity-50 "  + theme.chatState}>Delivered</div>
           </div>)
                       
             })

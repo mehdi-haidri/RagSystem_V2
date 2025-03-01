@@ -4,6 +4,8 @@ import { useState } from "react";
 import ImageUpload from "./ImageUpload";
 import ReportText from "./ReportText";
 import { Themes } from "@/app/assets/Themes";
+import { Button } from "@/components/ui/button";
+import { SparklesIcon } from "lucide-react";
 
 function Drawer({setConfirmedReport ,setAlert}) {
   const [open, setOpen] = useState(false);
@@ -46,17 +48,19 @@ function Drawer({setConfirmedReport ,setAlert}) {
   return (
     <>
       <div className="text-center">
-        <button
-          onClick={() => setOpen(true)}
-          className={` text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-lg px-2 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`}
+      
+        <Button  onClick={() => setOpen(true)}
+          className={` text-white bg-gray-700 hover:bg-gray-800  font-semibold rounded-lg text-lg p-3 py-5 outline-none  border-0`}
           type="button"
           data-drawer-target="drawer-right-example"
           data-drawer-show="drawer-right-example"
           data-drawer-placement="right"
           aria-controls="drawer-right-example"
-        >
-          Report Scanner
-        </button>
+        variant="outline" >
+                Report Scanner
+
+      <SparklesIcon className="-me-1 ml-2 opacity-90" size={16} aria-hidden="true" />
+    </Button>
       </div>
 
       <div

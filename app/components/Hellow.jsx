@@ -28,9 +28,9 @@ export default function Hellow() {
         />
         
         <SplitText
-            text="this is a medical chaBot  "
+            text="This medical assistant chatbot is designed for informational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for any health concerns or medical decisions. If you are experiencing a medical emergency, please seek immediate medical attention"
             className="text-xl font-semibold text-gray-400 text-center "
-            delay={50}
+            delay={20}
             animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
             animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
             easing="easeOutCubic"

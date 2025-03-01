@@ -126,14 +126,14 @@ export default function LoginPage({children}) {
           <span className="text-xs text-muted-foreground">Or</span>
         </div>
 
-        <Button className="bg-[#DB4437] text-white after:flex-1 hover:bg-[#DB4437]/90" onClick={() => {
+        <Button className="bg-[#DB4437] text-white items-center  hover:bg-[#DB4437]/90" onClick={() => {
           signIn("google", { callbackUrl: "/chatbot" })
           setIsLoading(true);  }}>
-          {isLoading ? <span className="loading loading-ring loading-md"></span> :
-            (<><span className="pointer-events-none me-2 flex-1">
-              <RiGoogleFill className="opacity-60" size={16} aria-hidden="true" />
+          {isLoading ? <span className="loading  loading-ring loading-md"></span> :
+            (<><span className="pointer-events-none me-2 ">
+              <RiGoogleFill className="opacity-100" size={23} aria-hidden="true" />
             </span>
-          <p className="text-md">Login with Google</p> </>)
+          <p className="text-lg">Login with Google</p> </>)
           }
         </Button>
        

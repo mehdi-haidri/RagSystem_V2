@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { Themes } from "../assets/Themes";
 import Drawer from "../components/ReportScanner/Drawer";
 import Alert from "../components/Alert";
+
 async function readStream(response, setMessages) {
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
@@ -293,6 +294,8 @@ function Page() {
             </button>
           </form>
           <Drawer setAlert={setAlert} setConfirmedReport={setConfirmedReport}></Drawer>
+     
+
         </div>
       </main>
     </div>

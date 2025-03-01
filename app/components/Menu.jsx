@@ -27,27 +27,15 @@ function Menu({ createChat, chats, updateMessages, currentChat , theme}) {
               </g>
             </g>
           </svg>
-          {/* <svg
-             xmlns="http://www.w3.org/2000/svg"
-             className="h-5 w-5"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke="currentColor">
-             <path
-               strokeLinecap="round"
-               strokeLinejoin="round"
-               strokeWidth="2"
-               d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-           </svg> */}
           New Chat
         </a>
       </li>
       <div className="flex w-full flex-col">
-        <div className={"divider " + theme.menuDivider }>previews</div>
+        <div className={"divider text-md font-semibold " + theme.menuDivider }>Previews</div>
       </div>
       {chats.length == 0 ?
         <div className="text-center">
-          <span className="loading loading-ring loading-md "></span>
+          <span className={"loading loading-ring loading-md " + theme.loadingState}></span>
         </div>
         : chats.map((chat, i) => (
           
@@ -86,7 +74,7 @@ function Menu({ createChat, chats, updateMessages, currentChat , theme}) {
 
 
       <div className="flex w-full flex-col">
-        <div className={"divider " + theme.menuDivider}></div>
+        <div className={"divider "+theme.menuDivider}></div>
       </div>
       <li className={"mt-auto mb-5 p-2 "+theme.menuText}>
         <button onClick={()=>document.getElementById('my_modal_1').showModal()}>

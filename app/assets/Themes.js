@@ -2,6 +2,7 @@ export const Themes = {
  dark: {
         chatBackground: 'bg-[#1d232a]',
         menuBackground: 'bg-base-200',
+        chatState  : "text-white",
         chatBuble: 'bg-[#2a323c]',
         inputText:"text-white",
         chatText: 'text-white',
@@ -13,9 +14,10 @@ export const Themes = {
         menuSelected: 'bg-base-100',
         logo: 'white',
         suggestionBackground: 'bg-[#323a44]',
-        suggestionText: 'text-white',
-        menuDivider: "",
-        logoutModal: "",
+        suggestionText: 'text-white ',
+        menuDivider: "text-neutral-content ",
+            logoutModal: "text-white",
+        loadingState  :"text-white"
   },
   light: {
         chatBackground: 'bg-white',
