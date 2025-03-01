@@ -33,6 +33,7 @@
     "mongoose": "^8.10.1",
     "next": "15.1.7",
     "next-auth": "^4.24.11",
+    "nodemailer": "^6.10.0",
     "ogl": "^1.0.11",
     "pdfjs-dist": "^4.10.38",
     "puppeteer": "^19.11.1",

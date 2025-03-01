@@ -7,8 +7,8 @@ import './global.css'
 function layouts({ children }) {
   return (
               <SessionProvider>
-      <html>
-        <body className={"  place-items-center flex flex-row relative " }> 
+      <html> 
+        <body className={"  place-items-center flex flex-row relative w-screen h-screen" }> 
 
               {children}
                   

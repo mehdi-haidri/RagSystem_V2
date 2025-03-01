@@ -26,6 +26,7 @@ export default function SignupPage({ children }) {
   };
 
   const handleSubmit = async (e) => {
+    console.log("hi");
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -42,12 +43,13 @@ export default function SignupPage({ children }) {
     if (!response.ok) {
       setError(data.error);
     } else {
-      setSuccess("Account created! Redirecting to login...");
+      setSuccess("Account created!");
       setTimeout(() => {
-        setIsLoading(false)
+       
         router.push("/")
       }, 2000) // Redirect to login page
     }
+    setIsLoading(false)
   };
 
   return (
@@ -71,42 +73,45 @@ export default function SignupPage({ children }) {
             </svg>
           </div>
           <DialogHeader>
-            <DialogTitle className="sm:text-center">Sign up Origin UI</DialogTitle>
+            <DialogTitle className="sm:text-center text-lg text-white">Sign up</DialogTitle>
             <DialogDescription className="sm:text-center">
               We just need a few details to get you started.
             </DialogDescription>
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500">{success}</p>}
+            {error && <p className="text-red-500 text-center  text-sm font-semibold">{error}</p>}
+            {success && <p className="text-green-500 text-center">{success}</p>}
           </DialogHeader>
         </div>
 
         <form className="space-y-5">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label className="text-white" htmlFor={`${id}-name`}>UserName</Label>
+              <Label className="text-white text-lg" htmlFor={`${id}-name`}>UserName</Label>
               <Input
-                
                 id={`${id}-name`}
-                type="text"
+               
                 name="username"
                 placeholder="Username"
                 value={formData.username}
                 onChange={handleChange}
+                className=" input input-bordered p-5 text-md "
                 required />
             </div>
             <div className="space-y-2">
-              <Label className="text-white" htmlFor={`${id}-email`}>Email</Label>
+              <Label className="text-white text-lg" htmlFor={`${id}-email`}>Email</Label>
               <Input id={`${id}-email`}
+                className="input input-bordered p-5 text-md "
+
                  type="email"
                  name="email"
                  placeholder="example@ex.com"
                  value={formData.email}
                  onChange={handleChange}
-                required />
+                 required />
             </div>
             <div className="space-y-2">
-              <Label className="text-white" htmlFor={`${id}-password`}>Password</Label>
+              <Label className="text-white text-lg" htmlFor={`${id}-password`}>Password</Label>
               <Input
+                className="input input-bordered p-5 text-md "
                 id={`${id}-password`}
                 type="password"
                 name="password"
@@ -117,7 +122,7 @@ export default function SignupPage({ children }) {
               />
             </div>
           </div>
-          <Button type="button" className="w-full">
+          <Button type="button" disabled={isLoading} className="w-full" onClick={handleSubmit}>
           {isLoading ? <span className="loading loading-ring loading-md"></span> : "Sign Up"}
           </Button>
         </form>

@@ -48,6 +48,19 @@ export default function LoginPage({children}) {
       router.push("/chatbot"); // Redirect to home page if user is already logged in
     }
   }, [sessionStatus]);
+
+
+  const handlePasswordReset = async () => {
+    if (email) {
+      await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+    } else {
+      setError("Please enter your email");
+    }
+  };
     
   return (
 
@@ -113,7 +126,7 @@ export default function LoginPage({children}) {
                 Remember me
               </Label>
             </div>
-            <a className="text-md text-gray-400 underline hover:no-underline" href="#">
+            <a className="text-md text-gray-400 underline hover:no-underline cursor-pointer" onClick={handlePasswordReset}>
               Forgot password?
             </a>
           </div>
