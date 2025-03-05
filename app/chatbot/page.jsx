@@ -49,7 +49,7 @@ async function readStream(response, setMessages) {
   return accumulatedText;
 }
 
-const createChat = (setCurrentChat, setMessages, user_id) => {
+const createChat = async (setCurrentChat, setMessages, user_id  ) => {
   fetch("/api/chats", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -61,7 +61,6 @@ const createChat = (setCurrentChat, setMessages, user_id) => {
       setMessages([]);
     });
 };
-
 const createMessage = (role, message, chat_id) => {
   fetch("/api/messages", {
     method: "POST",
@@ -69,29 +68,41 @@ const createMessage = (role, message, chat_id) => {
     body: JSON.stringify({ chat_id: chat_id, role: role, message: message }),
   }).then((res) => console.log(res.json()));
 };
-const getChats = (
+const getChats = async (
   setChats,
   setCurrentChat,
   setMessages,
   user_id,
   setAlert,
-  currentChat = null,
+  currentChat = null
 ) => {
-  fetch("/api/chats?user_id=" + user_id)
-    .then((res) => res.json())
-    .then((res) => {
-      setChats(res.chats);
-      if (res.chats.length > 0) {
-        if (currentChat === null)
-          updateMessages(res.chats[0]._id, setCurrentChat, setMessages);
-      } else {
-        createChat(setCurrentChat, setMessages, user_id);
+  try {
+    const res = await fetch("/api/chats?user_id=" + user_id);
+    const data = await res.json();
+
+    setChats(data.chats);
+
+    if (data.chats.length > 0) {
+      if (currentChat === null) {
+        updateMessages(data.chats[0]._id, setCurrentChat, setMessages);
       }
-    }).catch(res => {
-      setChats([]);
-      setAlert({ Message :'somthing went wrong' , type : "alert-warning"});
-    });
+    } else {
+      console.log("No chats found");
+
+      // 🛑 Prevent duplicate chat creation
+      const newChatRes = await fetch("/api/chats?user_id=" + user_id);
+      const newChatData = await newChatRes.json();
+
+      if (newChatData.chats.length === 0) {
+        await createChat(setCurrentChat, setMessages, user_id);
+      }
+    }
+  } catch (error) {
+    setChats([]);
+    setAlert({ Message: "Something went wrong", type: "alert-warning" });
+  }
 };
+
 
 const updateMessages = async (chat_id, setCurrentChat, setMessages) => {
   try {
@@ -143,6 +154,7 @@ function Page() {
   const [isDark, setIsDark] = useState(true);
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const {
     append,
     isLoading,
@@ -166,13 +178,16 @@ function Page() {
     },
   });
 
+  
+
+
   useEffect(() => {
     // createChat();
+    
+    if (status === "authenticated")
+      getChats(setChats, setCurrentChat, setMessages, session.user.id , setAlert );
 
-    if (status === "authenticated") {
-      getChats(setChats, setCurrentChat, setMessages, session.user.id , setAlert);
-    }
-  }, [status]);
+  }, [session?.user?.id]);
 
   useEffect(() => {
     ScrollDown();
@@ -196,7 +211,8 @@ function Page() {
       }
     >
       {alert && <Alert message={alert.Message} setAlert={setAlert} type={alert.type} />}
-      <nav>
+      <nav className={`  w-[300px] fixed top-0 left-0 z-40  sm:w-[350px] h-screen transition-transform    sm:translate-x-0 ${openDrawer ? "translate-x-0" : "-translate-x-full"}`}>
+    
         <Menu
           currentChat={currentChat}
           createChat={() =>
@@ -207,14 +223,15 @@ function Page() {
           }
           chats={chats}
           theme={theme}
+          setOpenDrawer={setOpenDrawer}
         ></Menu>
       </nav>
       <main
         className={
-          " gap-2 px-2 lg:px-[10%]  lg:w-[80%] pt-[5%] m-auto relative " + theme.chatBackground
+          " gap-2 px-2 lg:px-[10%] w-full  sm:w-[calc(100% - 350px] pt-[5%] sm:ml-[350px] relative " + theme.chatBackground
         }
       >
-        <Swap onclick={() => toggleTheme()}></Swap>
+        <Swap className="hidden sm:block absolute right-10 top-10 " onclick={() => toggleTheme()}></Swap>
         {messages.length == 0 && (!isDark ? (
           <Image src={logoLight} alt="Logo" className="w-[20%]" width={200} />
         ) : (

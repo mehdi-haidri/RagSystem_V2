@@ -1,14 +1,14 @@
 import React from 'react'
 
-function Swap({onclick}) {
+function Swap({onclick ,  className}) {
   return (
-    <div className="absolute right-10 top-10"><label className="swap swap-rotate">
+    <div className={"" + className}><label className="swap swap-rotate">
     {/* this hidden checkbox controls the state */}
     <input type="checkbox" onClick={onclick} />
   
     {/* sun icon */}
     <svg
-      className="swap-off h-10 w-10 fill-current text-gray-600"
+      className="swap-off z-50 h-10 w-10 fill-current text-gray-600"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24">
       <path
@@ -17,7 +17,7 @@ function Swap({onclick}) {
   
     {/* moon icon */}
     <svg
-      className="swap-on h-10 w-10 fill-current"
+      className="swap-on z-50 h-10 w-10 fill-current"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24">
       <path

@@ -3,7 +3,7 @@ import React from 'react'
 function Alert({message  , type ,setAlert}) {
   return (
       <>
-      <div role="alert" className={"alert "+type+" absolute z-50 top-10 left-1/2 -translate-x-1/2 w-fit "}>
+      <div role="alert" className={"alert "+type+" absolute z-[1000] top-10 left-1/2 -translate-x-1/2 w-fit "}>
               <svg
                   onClick={() => setAlert(null)}
     xmlns="http://www.w3.org/2000/svg"

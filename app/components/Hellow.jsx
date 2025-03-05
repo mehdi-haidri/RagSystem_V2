@@ -5,15 +5,20 @@ import { Button } from "@/components/ui/button";
 import LoginPage from "../login/LoginPage";
 import { DialogTrigger } from "@/components/ui/dialog";
 import SignupPage from "../signup/SignpPage";
+import Alert from "./Alert";
 
 const handleAnimationComplete = (setIsHovered) => {
   setIsHovered(true);
 };
 
 export default function Hellow() {
-    const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [alert, setAlert] = useState(null);
 
-    return (
+  return (
+      <>
+        {alert && <Alert message={alert.Message} type={alert.type} setAlert={setAlert} >  </Alert>}
+     
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4">
             <SplitText
             text="Welcome, to ChatBot!"
@@ -26,6 +31,9 @@ export default function Hellow() {
             rootMargin="-50px"
             onLetterAnimationComplete={() => handleAnimationComplete(setIsHovered)}
         />
+
+
+
         
         <SplitText
             text="This medical assistant chatbot is designed for informational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for any health concerns or medical decisions. If you are experiencing a medical emergency, please seek immediate medical attention"
@@ -42,7 +50,7 @@ export default function Hellow() {
            
              <div className="h-12">
                 {isHovered && <>
-                    <LoginPage >
+                    <LoginPage  setAlert={setAlert}>
                             <DialogTrigger asChild>
                             <Button  variant="outline" className="mr-2 text-md font-semibold bg-gray-200">Sign in</Button>
                             </DialogTrigger>
@@ -64,6 +72,8 @@ export default function Hellow() {
           
             
     
-        </div>
+      </div>
+      
+      </>
   )
 }

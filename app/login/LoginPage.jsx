@@ -2,7 +2,7 @@
 import { signIn  ,useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import {  RiGoogleFill } from "@remixicon/react";
+import { RiGoogleFill } from "@remixicon/react";
 
 
 import { Button } from "@/components/ui/button";
@@ -17,54 +17,68 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useId ,useState } from "react";
 
-export default function LoginPage({children}) {
+export default function LoginPage({ children, setAlert }) {
+
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const id = useId();
-  const { data: session , status : sessionStatus } = useSession();
+  const { status : sessionStatus } = useSession();
 
   const handleLogin = async (e) => {
         setIsLoading(true);
         e.preventDefault();
-        const result = await signIn("credentials", {
+    const result = await signIn("credentials", {
+      redirect: false,
           email,
           password,
-          redirect: false,
+         callbackUrl: "/chatbot"
         });
     
         if (result?.error) {
           setError("Invalid email or password");
           setIsLoading(false);
-        } else {
-          router.push("/chatbot"); // Redirect after successful login
-    }
+        } 
   };
   
   useEffect(() => {
     if (sessionStatus === "authenticated") {
-      router.push("/chatbot"); // Redirect to home page if user is already logged in
+      router.push("/chatbot"); 
     }
   }, [sessionStatus]);
 
+  console.log("zzzzzzzzzz");
 
   const handlePasswordReset = async () => {
     if (email) {
-      await fetch("/api/auth/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      try {
+        
+       const res =  await fetch("/api/auth/forgot-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+       });
+        
+        if (!res.ok) {
+          setAlert({ Message :'Somthing went wrong' , type : 'alert-warnning'});
+          throw new Error("Network response was not ok");
+        }
+        
+        setAlert({ Message :'Check your email' , type : 'alert-success'});
+      } catch (error) {
+        console.error("Error:", error);
+      }
+
     } else {
       setError("Please enter your email");
     }
   };
     
-  return (
-
-  
+  return (  
+    <>
+   
     <Dialog   >
       {children}
       <DialogContent className="bg-[#1d232a] border-none">
@@ -152,7 +166,7 @@ export default function LoginPage({children}) {
        
       </DialogContent>
     </Dialog>
-
+    </>
 
   );
 }
