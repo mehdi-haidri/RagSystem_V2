@@ -33,12 +33,28 @@ export async function POST(request) {
       });
     }
 
+   
+
+
+    
+
     const latestMessage = messages[messages.length - 1].content;
     if (!latestMessage?.trim()) {
       return new Response(JSON.stringify({ error: "Empty message content" }), { 
         status: 400 
       });
     }
+
+    let userMemory = "";
+
+    messages.map((message , i) => {
+     
+        if (i !== messages.length - 1) {
+          userMemory += message.role + " : " + message.content + "\n";
+        }
+      
+    });
+
 
     // Generate embeddings
     const embedResponse = await embeddingModel.embedContent(latestMessage);
@@ -62,45 +78,55 @@ export async function POST(request) {
       docContext = "";
     }
 
-    // Construct Gemini prompt
+   
     const template = {
       role: "user",
       parts: [{
-        text: `You are provided with a **summary of a patient's clinical report**, a **user query**, and **generic clinical insights** that may or may not be relevant to the report.  
-
+        text: `
 ### **Instructions:**
-- you are a **medical chatbot**.
-- Carefully analyze the clinical report if there was one before answering the user's query. 
-- Use the provided **generic clinical findings** only if they are relevant to the patient's case. **Do not include unrelated insights.**  
-- Ensure your response is **factually accurate, well-justified, and demonstrates a deep understanding** of both the query and the clinical report.  
-- If necessary, enrich your knowledge by referring to the generic clinical findings before formulating your response.  
-- **Do not rephrase or restate the user's query unless necessary for clarity.**  
-- **Provide a thorough, well-supported justification for your answer.**  
+- You are a **medical chatbot**.
+- keep the previous Messages in mind as memory and go through them when answering the user's query if necessary and in the previous Messages you are the system and the user is the user.
+- Carefully analyze the clinical report if there was one before answering the user's query if there was no report available then answer the user's query directly using relevent context only.
+- Use the provided **generic clinical findings** only if they are relevant to the patient's case. **Do not include unrelated insights.**
+- Ensure your response is **factually accurate, well-justified, and demonstrates a deep understanding** of both the query and the clinical report.
+- If necessary, enrich your knowledge by referring to the generic clinical findings before formulating your response.
+- **Do not rephrase or restate the user's query unless necessary for clarity.**
+- **Provide a thorough, well-supported justification for your answer.**
 
 ---
 
-### **Patient's Clinical Report Summary:**  
-${confirmedReport}  
-**(End of Patient's Clinical Report Summary)**  
+### **Previous Messages:**
+${userMemory}  
+**(End of Previous Messages)**  
 
 ---
 
-### **User Query:**  
-${latestMessage}  
-**(End of User Query)**  
+### **Patient's Clinical Report Summary:**
+${confirmedReport ? confirmedReport : "No clinical report available."}
+**(End of Patient's Clinical Report Summary)**
 
 ---
 
-### **Relevant Clinical Findings (if applicable):**  
-${docContext}  
-**(End of Clinical Findings)**  
+### **User Query:**
+${latestMessage}
+**(End of User Query)**
 
 ---
 
-### **Fact-Based Answer with Justification:**  
+### **Relevant Clinical Findings (if applicable):**
+${docContext ? docContext : "No relevant findings available."}
+**(End of Clinical Findings)**
 
+---
+
+### **Fact-Based Answer with Justification:**
 `}]
     };
+
+
+    console.log(template);
+
+
     
 
     // Initialize chat model

@@ -56,10 +56,11 @@ function Drawer({setConfirmedReport ,setAlert}) {
           data-drawer-show="drawer-right-example"
           data-drawer-placement="right"
           aria-controls="drawer-right-example"
-        variant="outline" >
-                Report Scanner
+          variant="outline" >
+          
+            <p className="hidden sm:block">   Report Scanner  </p>  
 
-      <SparklesIcon className="-me-1 ml-2 opacity-90" size={16} aria-hidden="true" />
+      <SparklesIcon className="-me-1  opacity-90" size={16} aria-hidden="true" />
     </Button>
       </div>
 
@@ -67,7 +68,7 @@ function Drawer({setConfirmedReport ,setAlert}) {
         id="drawer-right-example"
         className={`fixed ${Themes.dark.menuBackground} top-0 right-0 z-40 h-screen p-4 overflow-y-auto ${
           !open ? "translate-x-full" : ""
-        } transition-transform    w-[40%] w-sm-[30%] dark:bg-gray-800" tabIndex="-1" aria-labelledby="drawer-right-label`}
+        } transition-transform    w-[70%] sm:w-[40%] dark:bg-gray-800" tabIndex="-1" aria-labelledby="drawer-right-label`}
       >
         <button
           onClick={() => setOpen(false)}

@@ -279,7 +279,7 @@ function Page() {
           )}
         </section>
 
-        <div className="flex gap-2 w-[80%] h-fit">
+        <div className="flex gap-2  w-full sm:w-[80%] h-fit">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -287,32 +287,31 @@ function Page() {
               handleSubmit(e, { data: {ConfirmedReport: ConfirmedReport } });
               createMessage("user", input, currentChat);
             }}
-            className={`flex gap-2 p-2 chat-form flex-col border-gray-600 rounded-lg ${theme.chatInputBackground}  justify-center border-2 w-full`}
+            className={`flex flex-1 gap-2 p-2 chat-form flex-col border-gray-600 rounded-lg ${theme.chatInputBackground}  justify-center border-2 w-full`}
           >
-            <input
-              className={
-                " input  w-full  bg-transparent focus:outline-none overflow-break-all " +
-                theme.inputText
-              }
-              type="text"
-              onChange={handleInputChange}
-              value={input}
-              placeholder="Type your question ... "
-            />
+           <textarea
+  className={
+    "input w-full bg-transparent focus:outline-none focus:ring-0 overflow-break-all border-0 outline-none resize-none " +
+    theme.inputText
+  }
+  onChange={handleInputChange}
+  value={input}
+  placeholder="Type your question ..."
+  rows={2} // Set the initial number of visible lines
+></textarea>
             <button
               type="submit"
               disabled={isLoading}
               className={
-                " bg-gray-600 btn btn-outline font-semibold text-lg font-system  w-fit ml-auto text-black "
+                " bg-gray-600 btn btn-outline font-semibold text-sm sm:p-2 p-1 sm:text-lg font-system  w-fit ml-auto text-black "
               }
             >
               {" "}
-              {isLoading ? "Sending..." : "Send 🤞"}
+              {isLoading ? "Sending..." : "Send🤞"}
             </button>
           </form>
           <Drawer setAlert={setAlert} setConfirmedReport={setConfirmedReport}></Drawer>
      
-
         </div>
       </main>
     </div>

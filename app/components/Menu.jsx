@@ -8,7 +8,7 @@ function Menu({ createChat, chats, updateMessages, currentChat , theme , setOpen
   return (
     <>
       <ul className={"menu  w-[100%] h-screen pt-6 relative " + theme.menuBackground}>
-        <DrawerOpener setOpenDrawer={setOpenDrawer} className=" absolute fixed top-0 right-[-45px] z-40"></DrawerOpener>
+        <DrawerOpener setOpenDrawer={setOpenDrawer} className=" sm:hidden absolute fixed top-0 right-[-45px] z-40"></DrawerOpener>
         <Swap className={"sm:hidden"}  onclick={() => toggleTheme()}></Swap>
       <li className={"mb-2 p-4 text-white " + theme.menuSelected}>
         <a className={"hover:"+theme.menuHover} onClick={createChat}>

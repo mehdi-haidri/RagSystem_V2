@@ -78,12 +78,12 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      // authorization: {
-      //   params: {
-      //     access_type: "offline", // Requests a refresh token
-      //     prompt: "consent", // Forces Google to ask for permissions again
-      //   },
-      // },
+      authorization: {
+        params: {
+          access_type: "offline", // Requests a refresh token
+          prompt: "consent", // Forces Google to ask for permissions again
+        },
+      },
     })
   ],
   callbacks: {

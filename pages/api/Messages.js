@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { DbConnection } from '@/db/DbConnection.js';
 import Message from '@/models/Message';
 import Chat from '@/models/Chat';
