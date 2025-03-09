@@ -47,7 +47,7 @@ function Chat({ messages , theme , isLoading }) {
             <time className={"text-xs opacity-80 "+ theme.chatState }>{new Date(message.created_at).getHours()} : {new Date(message.created_at).getMinutes()}</time>
             </div>
             <div className={theme.chatBuble + " chat-bubble "}>
-              <MarkDown text={message.content}></MarkDown>
+              <MarkDown className={ theme.chatBuble   +" "+ theme.chatText} text={message.content}></MarkDown>
           </div>
             <div className={"chat-footer opacity-50 "  + theme.chatState}>Delivered</div>
           </div>)

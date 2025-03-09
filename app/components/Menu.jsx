@@ -10,7 +10,7 @@ function Menu({ createChat, chats, updateMessages, currentChat , theme , setOpen
       <ul className={"menu  w-[100%] h-screen pt-6 relative " + theme.menuBackground}>
         <DrawerOpener setOpenDrawer={setOpenDrawer} className=" sm:hidden absolute fixed top-0 right-[-45px] z-40"></DrawerOpener>
         <Swap className={"sm:hidden"}  onclick={() => toggleTheme()}></Swap>
-      <li className={"mb-2 p-4 text-white " + theme.menuSelected}>
+      <li className={"mb-2 p-4 " + theme.menuSelected + " " + theme.menuSelectedText}>
         <a className={"hover:"+theme.menuHover} onClick={createChat}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -81,8 +81,8 @@ function Menu({ createChat, chats, updateMessages, currentChat , theme , setOpen
       <div className="flex w-full flex-col">
         <div className={"divider "+theme.menuDivider}></div>
       </div>
-      <li className={"mt-auto mb-5 p-2 "+theme.menuText}>
-        <button onClick={()=>document.getElementById('my_modal_1').showModal()}>
+      <li className={"mt-auto mb-5 p-2 "+theme.menuText }>
+          <button className={ theme.menuHover} onClick={()=>document.getElementById('my_modal_1').showModal()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -112,11 +112,11 @@ function Menu({ createChat, chats, updateMessages, currentChat , theme , setOpen
     <h3 className="font-bold text-lg">Hello!</h3>
     <p className="py-4">Are you sure you want to logout?</p>
           <div className="modal-action">
-          <button className="btn" onClick={()=>signOut()}>Sign Out</button>
+          <button className={"btn border-none "+ theme.logoutModalButton} onClick={()=>signOut()}>Sign Out</button>
 
       <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
-        <button className="btn">Close</button>
+              <button className={"btn border-none "+ theme.logoutModalButton}>Close</button>
       </form>
     </div>
   </div>

@@ -1,8 +1,9 @@
 "use client";
-import {useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useChat } from "ai/react";
 import Image from "next/image";
 import logo from "../assets/logo.png";
+import send2 from "../assets/send2.svg";
 import logoLight from "../assets/logoLight.png";
 import Chat from "../components/Chat";
 import Swap from "../components/Swap";
@@ -49,7 +50,7 @@ async function readStream(response, setMessages) {
   return accumulatedText;
 }
 
-const createChat = async (setCurrentChat, setMessages, user_id  ) => {
+const createChat = async (setCurrentChat, setMessages, user_id) => {
   fetch("/api/chats", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -103,7 +104,6 @@ const getChats = async (
   }
 };
 
-
 const updateMessages = async (chat_id, setCurrentChat, setMessages) => {
   try {
     setCurrentChat(chat_id);
@@ -147,7 +147,7 @@ const updateChatLabel = async (chat_id, label) => {
 function Page() {
   const chatRef = useRef(null);
   const [alert, setAlert] = useState(null);
-  const [ showLodingBubble, setShowLodingBubble] = useState(false);
+  const [showLodingBubble, setShowLodingBubble] = useState(false);
   const [ConfirmedReport, setConfirmedReport] = useState("");
   const [theme, setTheme] = useState(Themes.dark);
   const { data: session, status } = useSession();
@@ -178,15 +178,17 @@ function Page() {
     },
   });
 
-  
-
-
   useEffect(() => {
     // createChat();
-    
-    if (status === "authenticated")
-      getChats(setChats, setCurrentChat, setMessages, session.user.id , setAlert );
 
+    if (status === "authenticated")
+      getChats(
+        setChats,
+        setCurrentChat,
+        setMessages,
+        session.user.id,
+        setAlert
+      );
   }, [session?.user?.id]);
 
   useEffect(() => {
@@ -210,9 +212,14 @@ function Page() {
         "w-full h-screen   flex flex-row relative " + theme.chatBackground
       }
     >
-      {alert && <Alert message={alert.Message} setAlert={setAlert} type={alert.type} />}
-      <nav className={`  w-[300px] fixed top-0 left-0 z-40  sm:w-[350px] h-screen transition-transform    sm:translate-x-0 ${openDrawer ? "translate-x-0" : "-translate-x-full"}`}>
-    
+      {alert && (
+        <Alert message={alert.Message} setAlert={setAlert} type={alert.type} />
+      )}
+      <nav
+        className={`  w-[300px] fixed top-0 left-0 z-40  sm:w-[350px] h-screen transition-transform    sm:translate-x-0 ${
+          openDrawer ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         <Menu
           currentChat={currentChat}
           createChat={() =>
@@ -228,29 +235,50 @@ function Page() {
       </nav>
       <main
         className={
-          " gap-2 px-2 lg:px-[10%] w-full  sm:w-[calc(100% - 350px] pt-[5%] sm:ml-[350px] relative " + theme.chatBackground
+          " gap-2 px-2 lg:px-[10%] w-full  sm:w-[calc(100% - 350px] pt-[5%] sm:ml-[350px] relative " +
+          theme.chatBackground
         }
       >
-        <Swap className="hidden sm:block absolute right-10 top-10 " onclick={() => toggleTheme()}></Swap>
-        {messages.length == 0 && (!isDark ? (
-          <Image src={logoLight} alt="Logo" className="w-[20%]" width={200} />
-        ) : (
-          <Image src={logo} alt="Logo" className=" w-[20%]" width={200} />
-        ))}
-        { ConfirmedReport && <div className="toast  absolute left-0 top-1 h-fit  w-fit">
-          <div className="alert  alert-success text-gray-800 px-2 py-1.5  font-semibold font-sans w-fit">
-            
-            <svg className="w-4 h-4 text-gray-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
-            </svg>
-            <p>Repport Added</p>
-            
+        <Swap
+          className="hidden sm:block absolute right-10 top-10 "
+          onclick={() => toggleTheme()}
+        ></Swap>
+        {messages.length == 0 &&
+          (!isDark ? (
+            <Image src={logoLight} alt="Logo" className="w-[20%]" width={200} />
+          ) : (
+            <Image src={logo} alt="Logo" className=" w-[20%]" width={200} />
+          ))}
+        {ConfirmedReport && (
+          <div className="toast  absolute left-0 top-1 h-fit  w-fit">
+            <div className="alert  alert-success text-gray-800 px-2 py-1.5  font-semibold font-sans w-fit">
+              <svg
+                className="w-4 h-4 text-gray-800 "
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 20"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"
+                />
+              </svg>
+              <p>Repport Added</p>
+            </div>
           </div>
-        </div>}
+        )}
         <section className="h-full " ref={chatRef}>
           {/* Render Chat component only if there are messages */}
           {messages?.length > 0 ? (
-            <Chat isLoading={showLodingBubble} theme={theme} messages={messages} />
+            <Chat
+              isLoading={showLodingBubble}
+              theme={theme}
+              messages={messages}
+            />
           ) : (
             <div className="flex inline gap-2 flex-wrap justify-center mt-[10%]">
               <div
@@ -284,34 +312,41 @@ function Page() {
             onSubmit={(e) => {
               e.preventDefault();
               setShowLodingBubble(true);
-              handleSubmit(e, { data: {ConfirmedReport: ConfirmedReport } });
+              handleSubmit(e, { data: { ConfirmedReport: ConfirmedReport } });
               createMessage("user", input, currentChat);
             }}
             className={`flex flex-1 gap-2 p-2 chat-form flex-col border-gray-600 rounded-lg ${theme.chatInputBackground}  justify-center border-2 w-full`}
           >
-           <textarea
-  className={
-    "input w-full bg-transparent focus:outline-none focus:ring-0 overflow-break-all border-0 outline-none resize-none " +
-    theme.inputText
-  }
-  onChange={handleInputChange}
-  value={input}
-  placeholder="Type your question ..."
-  rows={2} // Set the initial number of visible lines
-></textarea>
+            <textarea
+              className={
+                "input w-full bg-transparent focus:outline-none focus:ring-0 overflow-break-all border-0 outline-none resize-none " +
+                theme.inputText
+              }
+              onChange={handleInputChange}
+              value={input}
+              placeholder="Type your question ..."
+              rows={2} // Set the initial number of visible lines
+            ></textarea>
             <button
               type="submit"
               disabled={isLoading}
               className={
-                " bg-gray-600 btn btn-outline font-semibold text-sm sm:p-2 p-1 sm:text-lg font-system  w-fit ml-auto text-black "
+                " bg-gray-600 btn  rounded-full      ml-auto " + theme.suggestionBackground
               }
             >
               {" "}
-              {isLoading ? "Sending..." : "Send🤞"}
+              {isLoading ? (
+                <svg width={15} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC" strokeWidth="0.128"></g><g id="SVGRepo_iconCarrier"> <rect x="1" y="1" width="15" height="15" fill="#ffff"></rect> </g></svg>) :
+                (<Image src={send2} alt="send" width={25}></Image>)
+               
+              }
             </button>
           </form>
-          <Drawer setAlert={setAlert} setConfirmedReport={setConfirmedReport}></Drawer>
-     
+          <Drawer
+            theme={theme}
+            setAlert={setAlert}
+            setConfirmedReport={setConfirmedReport}
+          ></Drawer>
         </div>
       </main>
     </div>

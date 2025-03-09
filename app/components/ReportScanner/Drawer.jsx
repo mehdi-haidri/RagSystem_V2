@@ -3,11 +3,10 @@
 import { useState } from "react";
 import ImageUpload from "./ImageUpload";
 import ReportText from "./ReportText";
-import { Themes } from "@/app/assets/Themes";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon } from "lucide-react";
 
-function Drawer({setConfirmedReport ,setAlert}) {
+function Drawer({ setConfirmedReport, setAlert , theme}) {
   const [open, setOpen] = useState(false);
   const [base64String, setBase64Data] = useState(null);
   const [reportData, setReportData] = useState(null);
@@ -50,7 +49,7 @@ function Drawer({setConfirmedReport ,setAlert}) {
       <div className="text-center">
       
         <Button  onClick={() => setOpen(true)}
-          className={` text-white bg-gray-700 hover:bg-gray-800  font-semibold rounded-lg text-lg p-3 py-5 outline-none  border-0`}
+          className={` ${theme.menuText} bg-gray-700 hover:bg-gray-200 ${theme.menuBackground}  font-semibold rounded-lg text-lg p-3 py-5 outline-none  border-0`}
           type="button"
           data-drawer-target="drawer-right-example"
           data-drawer-show="drawer-right-example"
@@ -66,7 +65,7 @@ function Drawer({setConfirmedReport ,setAlert}) {
 
       <div
         id="drawer-right-example"
-        className={`fixed ${Themes.dark.menuBackground} top-0 right-0 z-40 h-screen p-4 overflow-y-auto ${
+        className={`fixed ${theme.menuBackground} top-0 right-0 z-40 h-screen p-4 overflow-y-auto ${
           !open ? "translate-x-full" : ""
         } transition-transform    w-[70%] sm:w-[40%] dark:bg-gray-800" tabIndex="-1" aria-labelledby="drawer-right-label`}
       >
@@ -116,12 +115,12 @@ function Drawer({setConfirmedReport ,setAlert}) {
         <div className="grid  w-full">
          <button
             onClick={()=>{ handleImageExtraction()}}
-            className={`px-4 w-full py-2 ${isLoading && 'py-0' } text-lg   font-semibold text-center text-white ${Themes.dark.chatBackground} border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-600 hover:text-gray-800  `}
+            className={`px-4 w-full py-2 ${isLoading && 'py-0' } text-lg   font-semibold text-center ${theme.chatText} ${theme.chatBackground} border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-200 hover:text-gray-800  `}
           >
             {isLoading ? <span className="loading loading-infinity loading-lg p-0"></span> : "Analyze"}
           </button>  
         </div>
-        <ReportText setConfirmedReport={setConfirmedReport} reportData={reportData} setReportData={setReportData}></ReportText>
+        <ReportText theme={theme} setConfirmedReport={setConfirmedReport} reportData={reportData} setReportData={setReportData}></ReportText>
       </div>
     </>
   );
