@@ -17,6 +17,9 @@ const UserSchema = new mongoose.Schema({
   refreshToken: {
     type: String,
   },
+  PreferedTheme: {
+    type: String, default : "light"
+  },
   resetPasswordToken: { type: String, default: null },
   resetPasswordExpires: { type: Date, default: null },
   created_at: {

@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { DbConnection } from "@/db/DbConnection";
 import User from "@/models/User";
 import "dotenv/config";
+import { TURBOPACK_CLIENT_MIDDLEWARE_MANIFEST } from "next/dist/shared/lib/constants";
 
 async function refreshAccessToken(token) {
   try {
@@ -71,8 +72,8 @@ export const authOptions = {
         if (!isValidPassword) {
           throw new Error("Invalid password");
         }
-
-        return { id: user._id, email: user.email, name: user.username  };
+      
+        return { id: user._id, email: user.email, name: user.username , theme : user.PreferedTheme  };
       },
     }),
     GoogleProvider({
@@ -108,9 +109,10 @@ export const authOptions = {
           existingUser.refreshToken = account.refresh_token;
           await existingUser.save();
         }
-    
         user.id = existingUser._id;
         user.image = profile.picture;
+        user.theme = existingUser.PreferedTheme;
+  
       }
     
       return true;
@@ -119,7 +121,7 @@ export const authOptions = {
 
     async jwt({ token, user, account }) {
       // If signing in, update the token with new values
-      console.log("Account:", account);
+  
       if (account) {
         token.id = user.id;
         token.provider = account.provider;
@@ -135,16 +137,18 @@ export const authOptions = {
       if (token.provider === "google" && Date.now() > token.accessTokenExpires) {
         return await refreshAccessToken(token);
       }
-    
+      if (user) token.theme = user.theme;   
       return token;
     },
 
-    async session({ session, token }) {
+    async session({ session, token  }) {
       session.user.id = token.id;
       session.user.provider = token.provider;
+      session.user.theme = token.theme;
       if (token.provider === "google") {
         session.user.accessToken = token.accessToken;
       }
+      console.log("session : "  , session)
       return session;
     },
   },

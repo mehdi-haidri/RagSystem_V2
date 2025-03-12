@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { Themes } from "../assets/Themes";
 import Drawer from "../components/ReportScanner/Drawer";
 import Alert from "../components/Alert";
+import { set } from "mongoose";
 
 async function readStream(response, setMessages) {
   const reader = response.body.getReader();
@@ -181,7 +182,8 @@ function Page() {
   useEffect(() => {
     // createChat();
 
-    if (status === "authenticated")
+    if (status === "authenticated") {
+      setTheme(Themes[session.user.theme])
       getChats(
         setChats,
         setCurrentChat,
@@ -189,6 +191,7 @@ function Page() {
         session.user.id,
         setAlert
       );
+    }
   }, [session?.user?.id]);
 
   useEffect(() => {

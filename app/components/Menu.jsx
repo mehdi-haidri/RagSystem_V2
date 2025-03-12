@@ -10,12 +10,12 @@ function Menu({ createChat, chats, updateMessages, currentChat , theme , setOpen
       <ul className={"menu  w-[100%] h-screen pt-6 relative " + theme.menuBackground}>
         <DrawerOpener setOpenDrawer={setOpenDrawer} className=" sm:hidden absolute fixed top-0 right-[-45px] z-40"></DrawerOpener>
         <Swap className={"sm:hidden"}  onclick={() => toggleTheme()}></Swap>
-      <li className={"mb-2 p-4 " + theme.menuSelected + " " + theme.menuSelectedText}>
-        <a className={"hover:"+theme.menuHover} onClick={createChat}>
+      <li className={"mb-2 p-4  " + theme.menuSelected + " " + theme.menuSelectedText}>
+        <a className={" font-semibold text-lg "+theme.menuHover} onClick={createChat}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
+            width="35"
+            height="35"
             className="h-6 w-6"
             viewBox="0 0 32 32"
           >
