@@ -12,7 +12,6 @@ import { useSession } from "next-auth/react";
 import { Themes } from "../assets/Themes";
 import Drawer from "../components/ReportScanner/Drawer";
 import Alert from "../components/Alert";
-import { set } from "mongoose";
 
 async function readStream(response, setMessages) {
   const reader = response.body.getReader();
@@ -184,7 +183,9 @@ function Page() {
 
     if (status === "authenticated") {
       setTheme(Themes[session.user.theme])
-      getChats(
+      setIsDark(session.user.theme === "dark");
+
+        getChats(
         setChats,
         setCurrentChat,
         setMessages,
@@ -207,9 +208,11 @@ function Page() {
   const toggleTheme = () => {
     setTheme(isDark ? Themes.light : Themes.dark);
     setIsDark(!isDark);
+    
   };
 
   return (
+
     <div
       className={
         "w-full h-screen   flex flex-row relative " + theme.chatBackground
@@ -233,6 +236,8 @@ function Page() {
           }
           chats={chats}
           theme={theme}
+          isDark={isDark}
+          session={session}
           setOpenDrawer={setOpenDrawer}
         ></Menu>
       </nav>
@@ -243,8 +248,10 @@ function Page() {
         }
       >
         <Swap
-          className="hidden sm:block absolute right-10 top-10 "
+          className={"hidden sm:block absolute right-10 top-10 "}
           onclick={() => toggleTheme()}
+          session={session}
+          isDark={isDark}
         ></Swap>
         {messages.length == 0 &&
           (!isDark ? (

@@ -19,10 +19,10 @@ export default function Hellow() {
       <>
         {alert && <Alert message={alert.Message} type={alert.type} setAlert={setAlert} >  </Alert>}
      
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4">
+        <div className="absolute  w-[100%] sm:w-fit top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4">
             <SplitText
             text="Welcome, to ChatBot!"
-            className="text-5xl font-semibold text-gray-200 text-center "
+            className="  text-3xl sm:text-5xl font-semibold text-gray-200 text-center "
             delay={150}
             animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
             animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}

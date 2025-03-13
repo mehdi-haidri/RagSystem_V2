@@ -1,5 +1,6 @@
 
 import '../global.css'
+import SessionLoader from './SessionLoader'
 
 
 export const metadata = {
@@ -12,8 +13,11 @@ export const metadata = {
 function layouts({ children }) {
 
   return (
-      <>
-         {children}
+    <>
+      <SessionLoader>
+     {children}
+      </SessionLoader>
+  
       </>
     
   )

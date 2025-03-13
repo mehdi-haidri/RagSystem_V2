@@ -2,9 +2,23 @@
 import { signOut } from "next-auth/react";
 import DrawerOpener from "../components/DrawerOpener";
 import Swap from "./Swap";
+import { useState } from "react";
 
 
-function Menu({ createChat, chats, updateMessages, currentChat , theme , setOpenDrawer}) {
+
+
+function Menu({ createChat, chats, updateMessages, currentChat, theme, setOpenDrawer ,session , isDark}) {
+
+  const [signOutLoder, setSignOutLoder] = useState(false);
+  
+
+  const saveTheme = async () => {
+    const res = await fetch("/api/theme", {
+      method: "POST",
+      body: JSON.stringify({ user_id : session.user.id,theme: isDark ? "dark" : "light" }),
+    });
+    const data = await res.json();
+  };
   return (
     <>
       <ul className={"menu  w-[100%] h-screen pt-6 relative " + theme.menuBackground}>
@@ -112,7 +126,13 @@ function Menu({ createChat, chats, updateMessages, currentChat , theme , setOpen
     <h3 className="font-bold text-lg">Hello!</h3>
     <p className="py-4">Are you sure you want to logout?</p>
           <div className="modal-action">
-          <button className={"btn border-none "+ theme.logoutModalButton} onClick={()=>signOut()}>Sign Out</button>
+            <button className={"btn border-none " + theme.logoutModalButton} onClick={() => {
+              setSignOutLoder(true)
+              saveTheme()
+              signOut()
+            }}>     { signOutLoder ?<div className="text-center">
+            <span className={"loading loading-ring loading-md " + theme.loadingState}></span>
+          </div> : "Sign Out"}</button>
 
       <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
