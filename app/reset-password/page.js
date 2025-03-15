@@ -1,11 +1,10 @@
 'use client'
 import { useState } from "react";
 import { useSearchParams }  from "next/navigation";
-import { set } from "mongoose";
 
 function page() {
 
-    const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const email = searchParams.get("email");
 
@@ -46,6 +45,7 @@ function page() {
     setLoading(false);
   };
   return (
+   
     <div className="flex justify-center bg-gray-300 items-center w-screen h-screen">
          
       <form onSubmit={handleResetPassword} className="flex flex-col gap-4 center bg-white p-4 w-[35%] rounded-md shadow-md">
@@ -73,6 +73,7 @@ function page() {
 
      
     </div>
+   
   );
 }
 
