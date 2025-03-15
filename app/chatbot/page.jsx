@@ -318,15 +318,15 @@ function Page() {
             ></textarea>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || input == ""}
               className={
-                " bg-gray-600 btn  rounded-full      ml-auto " + theme.suggestionBackground
+                ` btn  rounded-full   border-0    ml-auto  ${theme.menuSelected} ${ input == "" ? "hover:cursor-not-allowed" : theme.menuHover} `
               }
             >
               {" "}
               {isLoading ? (
                 <svg width={15} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC" strokeWidth="0.128"></g><g id="SVGRepo_iconCarrier"> <rect x="1" y="1" width="15" height="15" fill="#ffff"></rect> </g></svg>) :
-                (<Image src={send2} alt="send" width={25}></Image>)
+                (<Image className={`${ input == "" ? " opacity-20" : "opacity-100"}`} src={send2} alt="send" width={25}></Image>)
                
               }
             </button>

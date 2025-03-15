@@ -130,12 +130,12 @@ function ImageUpload({ setBase64Data, setAlert }) {
           onDragLeave={handleDragLeave}
           onDragEnter={handleDragEnter}
           htmlFor="dropzone-file"
-          className={`flex flex-col items-center justify-center w-full min-h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 ${
+          className={`flex flex-col items-center justify-center w-full min-h-60  border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 ${
             isDragging ? "bg-gray-600" : ""
           }`}
         >
           {file ? (
-            <Rr src={file} width={200} height={200} alt="image" />
+            <Rr src={file} width={150} height={150} alt="image" />
           ) : (
               !isDragging && (
                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
