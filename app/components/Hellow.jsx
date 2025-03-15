@@ -6,7 +6,7 @@ import LoginPage from "../login/LoginPage";
 import { DialogTrigger } from "@/components/ui/dialog";
 import SignupPage from "../signup/SignpPage";
 import Alert from "./Alert";
-import ShinyText from "./Aurora/shinyText";
+import ShinyText from "./Aurora/ShinyText";
 
 const handleAnimationComplete = (setIsHovered) => {
   setIsHovered(true);
