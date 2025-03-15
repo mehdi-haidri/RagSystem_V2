@@ -6,6 +6,7 @@ import LoginPage from "../login/LoginPage";
 import { DialogTrigger } from "@/components/ui/dialog";
 import SignupPage from "../signup/SignpPage";
 import Alert from "./Alert";
+import ShinyText from "./Aurora/shinyText";
 
 const handleAnimationComplete = (setIsHovered) => {
   setIsHovered(true);
@@ -22,7 +23,7 @@ export default function Hellow() {
         <div className="absolute  w-[100%] sm:w-fit top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4">
             <SplitText
             text="Welcome, to ChatBot!"
-            className="  text-3xl sm:text-5xl font-semibold text-gray-200 text-center "
+            className="  text-3xl sm:text-5xl select-none font-semibold text-gray-200 text-center "
             delay={150}
             animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
             animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
@@ -37,22 +38,26 @@ export default function Hellow() {
         
         <SplitText
             text="This medical assistant chatbot is designed for informational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for any health concerns or medical decisions. If you are experiencing a medical emergency, please seek immediate medical attention"
-            className="text-xl font-semibold text-gray-400 text-center "
+            className="text-xl font-semibold text-gray-400 text-center select-none "
             delay={20}
             animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
             animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
             easing="easeOutCubic"
             threshold={0.2}
             rootMargin="-50px"
-            onLetterAnimationComplete={() => handleAnimationComplete(setIsHovered)}
+          onLetterAnimationComplete={() => handleAnimationComplete(setIsHovered)}
+          
             />
              
            
              <div className="h-12">
                 {isHovered && <>
                     <LoginPage  setAlert={setAlert}>
-                            <DialogTrigger asChild>
-                            <Button  variant="outline" className="mr-2 text-md font-semibold bg-gray-200">Sign in</Button>
+              <DialogTrigger asChild>
+                
+                <Button variant="outline" className="mr-2 text-lg font-semibold bg-transparent">
+                <ShinyText text="SignIn" disabled={false} speed={3} className='custom-class' />
+                            </Button>
                             </DialogTrigger>
                     </LoginPage>
                     <SignupPage>

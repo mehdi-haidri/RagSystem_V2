@@ -5,7 +5,6 @@ import { useState } from "react";
 
 function ImageUpload({ setBase64Data, setAlert }) {
   const [file, setFile] = useState(null);
-  const [dragCounter, setDragCounter] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const handleFileChange = (e) => {
     const file = e;
@@ -97,17 +96,14 @@ function ImageUpload({ setBase64Data, setAlert }) {
 
   const handleDragEnter = (e) => {
     e.preventDefault();
-  
-    setDragCounter((prev) => prev + 1);
+
     setIsDragging(true);
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
-    setDragCounter((prev) => prev - 1);
-    if (dragCounter <= 1) {
-      setIsDragging(false);
-    }
+    setIsDragging(false);
+   
   };
 
   const handleDragOver = (e) => {
@@ -117,8 +113,6 @@ function ImageUpload({ setBase64Data, setAlert }) {
 
   const handleDrop = (e) => {
     e.preventDefault();
-   
-    setDragCounter(0);
     setIsDragging(false);
 
     const droppedFiles = e.dataTransfer.files;
@@ -136,14 +130,15 @@ function ImageUpload({ setBase64Data, setAlert }) {
           onDragLeave={handleDragLeave}
           onDragEnter={handleDragEnter}
           htmlFor="dropzone-file"
-          className={`flex flex-col items-center justify-center w-full h-30 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 ${
-            isDragging ? "bg-gray-200" : ""
+          className={`flex flex-col items-center justify-center w-full min-h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 ${
+            isDragging ? "bg-gray-600" : ""
           }`}
         >
           {file ? (
             <Rr src={file} width={200} height={200} alt="image" />
           ) : (
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              !isDragging && (
+                           <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
                 className="select-none w-9 h-9 mb-4 text-gray-500 dark:text-gray-400"
                 aria-hidden="true"
@@ -167,6 +162,8 @@ function ImageUpload({ setBase64Data, setAlert }) {
                 SVG, PNG, JPG , GIF or PDF{" "}
               </p>
             </div>
+              )
+ 
           )}
           <input
             id="dropzone-file"
