@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { Themes } from "../assets/Themes";
 import Drawer from "../components/ReportScanner/Drawer";
 import Alert from "../components/Alert";
+import NewChatPlaceHolder from "../components/NewChatPlaceHolder";
 
 async function readStream(response, setMessages) {
   const reader = response.body.getReader();
@@ -234,6 +235,7 @@ function Page() {
           updateMessages={(chat_id) =>
             updateMessages(chat_id, setCurrentChat, setMessages)
           }
+          toggleTheme={toggleTheme}
           chats={chats}
           theme={theme}
           isDark={isDark}
@@ -290,30 +292,7 @@ function Page() {
               messages={messages}
             />
           ) : (
-            <div className="flex inline gap-2 flex-wrap justify-center mt-[10%]">
-              <div
-                className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer  text-semibold font-sans `}
-              >
-                <span>New mail arrived</span>
-              </div>
-              <div
-                className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}
-              >
-                <span>Message sent successfully</span>
-              </div>
-              <div
-                className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}
-              >
-                <span>Message sent successfully</span>
-              </div>
-              <div
-                className={`w-fit ${theme.suggestionText} text-nowrap inline p-2 alert ${theme.suggestionBackground} select-none border-none cursor-pointer text-semibold font-sans `}
-              >
-                <span>
-                  Message sent successfhgqshs jdezjgf ezjfghzef zegeg gf d ully
-                </span>
-              </div>
-            </div>
+            <NewChatPlaceHolder theme={theme}></NewChatPlaceHolder>
           )}
         </section>
 

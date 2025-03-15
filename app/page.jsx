@@ -1,6 +1,6 @@
 'use client';
 // import LoginPage from "./components/LoginPage";
-import Aurora from './components/AuroraBackGround';
+import Aurora from './components/Aurora/AuroraBackGround';
 import Hellow from "./components/Hellow";
 
 function Page() {

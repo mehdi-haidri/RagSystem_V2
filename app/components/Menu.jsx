@@ -7,7 +7,7 @@ import { useState } from "react";
 
 
 
-function Menu({ createChat, chats, updateMessages, currentChat, theme, setOpenDrawer ,session , isDark}) {
+function Menu({ createChat, chats, updateMessages, currentChat, theme, setOpenDrawer ,session , isDark , toggleTheme}) {
 
   const [signOutLoder, setSignOutLoder] = useState(false);
   
@@ -22,8 +22,8 @@ function Menu({ createChat, chats, updateMessages, currentChat, theme, setOpenDr
   return (
     <>
       <ul className={"menu  w-[100%] h-screen pt-6 relative " + theme.menuBackground}>
-        <DrawerOpener setOpenDrawer={setOpenDrawer} className=" sm:hidden absolute fixed top-0 right-[-45px] z-40"></DrawerOpener>
-        <Swap className={"sm:hidden"}  onclick={() => toggleTheme()}></Swap>
+        <DrawerOpener setOpenDrawer={setOpenDrawer} className={`sm:hidden border-0 absolute fixed top-0 right-[-45px] z-40 ${theme.menuBackground}`}></DrawerOpener>
+        <Swap className={"sm:hidden"} isDark={isDark} onclick={() => toggleTheme()}></Swap>
       <li className={"mb-2 p-4  " + theme.menuSelected + " " + theme.menuSelectedText}>
         <a className={" font-semibold text-lg "+theme.menuHover} onClick={createChat}>
           <svg
