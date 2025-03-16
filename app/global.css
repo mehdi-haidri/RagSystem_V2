@@ -11,6 +11,8 @@
 
 
 body{
+  zoom: 1; /* Ensure no zooming */
+  transform: scale(1);
     width: 100vw;
     height: 100vh;
     background-color: black;

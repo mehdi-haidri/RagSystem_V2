@@ -6,13 +6,14 @@ import './global.css'
 
 function layouts({ children }) {
   return (
-              <SessionProvider>
+    <SessionProvider>
+      
       <html> 
         <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 
         </head>
-        <body className={"  place-items-center flex flex-row relative w-screen h-screen" }> 
+        <body className={" container  max-w-[100%] place-items-center flex flex-row relative w-screen h-screen" }> 
 
               {children}
                   
