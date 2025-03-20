@@ -57,9 +57,9 @@ function Drawer({ setConfirmedReport, setAlert , theme}) {
           aria-controls="drawer-right-example"
           variant="outline" >
           
-            <p className="hidden sm:block">   Report Scanner  </p>  
+            <p className="hidden sm:block">  Scanner  </p>  
 
-      <SparklesIcon className="-me-1  opacity-90" size={16} aria-hidden="true" />
+      <SparklesIcon className=" ml-1  opacity-90" size={16} aria-hidden="true" />
     </Button>
       </div>
 

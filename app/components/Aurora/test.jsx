@@ -1,9 +1,9 @@
 import { useSprings, animated } from '@react-spring/web';
 import { useEffect, useRef, useState } from 'react';
-
-
+import GradientText from './GradientText';
 
 const SplitText = ({
+    showBorder=false,
   text = '',
   className = '',
   delay = 100,
@@ -14,9 +14,10 @@ const SplitText = ({
   rootMargin = '-100px',
   textAlign = 'center',
   onLetterAnimationComplete,
+  gradientColors = ["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"],
+  animationSpeed = 8,
 }) => {
   const words = text.split(' ').map(word => word.split(''));
-
   const letters = words.flat();
   const [inView, setInView] = useState(false);
   const ref = useRef();
@@ -57,18 +58,15 @@ const SplitText = ({
   );
 
   return (
-    <p
+    <div
       ref={ref}
       className={`split-parent ${className}`}
       style={{ textAlign, overflow: 'hidden', display: 'inline', whiteSpace: 'normal', wordWrap: 'break-word' }}
     >
-     
       {words.map((word, wordIndex) => (
         <span key={wordIndex} style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
           {word.map((letter, letterIndex) => {
-            const index = words
-              .slice(0, wordIndex)
-              .reduce((acc, w) => acc + w.length, 0) + letterIndex;
+            const index = words.slice(0, wordIndex).reduce((acc, w) => acc + w.length, 0) + letterIndex;
 
             return (
               <animated.span
@@ -79,15 +77,16 @@ const SplitText = ({
                   willChange: 'transform, opacity',
                 }}
               >
-                {letter}
+                    <GradientText colors={gradientColors} showBorder={showBorder} animationSpeed={animationSpeed}>
+                  {letter}
+                </GradientText>
               </animated.span>
             );
           })}
           <span style={{ display: 'inline-block', width: '0.3em' }}>&nbsp;</span>
         </span>
       ))}
-  
-    </p>
+    </div>
   );
 };
 

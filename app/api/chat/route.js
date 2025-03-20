@@ -25,7 +25,7 @@ export async function POST(request) {
     const body = await request.json();
 
     const messages = body.messages;
-    const confirmedReport = body.data.ConfirmedReport;
+    const confirmedReport = body?.data?.ConfirmedReport;
 
     if (!messages || messages.length === 0) {
       return new Response(JSON.stringify({ error: "No messages provided" }), { 

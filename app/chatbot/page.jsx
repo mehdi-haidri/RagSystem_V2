@@ -164,6 +164,7 @@ function Page() {
     handleInputChange,
     handleSubmit,
     setMessages,
+    
   } = useChat({
     api: "/api/chat",
     onResponse: async (response) => {
@@ -176,6 +177,9 @@ function Page() {
       createMessage("system", message, currentChat);
       updateChatLabel(currentChat, message.slice(0, 40));
       getChats(setChats, setCurrentChat, setMessages, session.user.id, 1);
+    },
+    onmouseenter: (message) => {
+      console.log(message);
     },
   });
 
@@ -257,9 +261,9 @@ function Page() {
         ></Swap>
         {messages.length == 0 &&
           (!isDark ? (
-            <Image src={logoLight} alt="Logo" className="w-[20%]" width={200} />
+            <Image src={logoLight} alt="Logo" className="w-[45%]"  />
           ) : (
-            <Image src={logo} alt="Logo" className=" w-[20%]" width={200} />
+            <Image src={logo} alt="Logo" className=" w-[45%]"  />
           ))}
         {ConfirmedReport && (
           <div className="toast  absolute left-0 top-1 h-fit  w-fit">
@@ -292,11 +296,11 @@ function Page() {
               messages={messages}
             />
           ) : (
-            <NewChatPlaceHolder theme={theme}></NewChatPlaceHolder>
+            <NewChatPlaceHolder createMessage={createMessage} currentChat={currentChat} append={append} theme={theme}></NewChatPlaceHolder>
           )}
         </section>
 
-        <div className="flex gap-2  w-full sm:w-[80%] h-fit">
+        <div className="flex gap-2  w-full sm:w-[90%]  h-fit">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -320,7 +324,7 @@ function Page() {
               type="submit"
               disabled={isLoading || input == ""}
               className={
-                ` btn  rounded-full   border-0    ml-auto  ${theme.menuSelected} ${ input == "" ? "hover:cursor-not-allowed" : theme.menuHover} `
+                ` btn  rounded-full   border-0    ml-auto  ${theme.sendButton} ${ input == "" ? "hover:cursor-not-allowed" : theme.menuHover} `
               }
             >
               {" "}

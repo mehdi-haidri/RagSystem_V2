@@ -17,7 +17,8 @@ export const Themes = {
         suggestionText: 'text-white text-md  font-semibold font-systemf', 
         menuDivider: "text-neutral-content ",
         logoutModal: "text-white",
-        loadingState  :"text-white"
+            loadingState: "text-white",
+        sendButton :"bg-base-100"
   },
   light: {
         chatBackground: 'bg-white',
@@ -37,7 +38,8 @@ export const Themes = {
         menuDivider: "before:bg-[#dde3ea]  after:bg-[#dde3ea]",
         logoutModal: "bg-[#f0f4f9]",
         loadingState: "text-black",
-        logoutModalButton: "bg-gray-300 text-black"
+        logoutModalButton: "bg-gray-300 text-black",
+         sendButton :"bg-[#1b4fac]"
       },
 
 

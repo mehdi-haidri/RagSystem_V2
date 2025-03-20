@@ -8,16 +8,15 @@
     box-sizing: border-box;
 
 }
-
 html{
-  font-size: 16px !important; /* Use a fixed font size */
+ scrollbar-gutter: unset !important;
+  width: 100dvw;
 }
+
+
 body{
-  
-  zoom: 1; /* Ensure no zooming */
-  transform: none;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     background-color: black;
 }
 
