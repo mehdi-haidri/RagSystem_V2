@@ -1,9 +1,6 @@
 
 function Swap({ onclick, className ,isDark}) {
 
-
-
-  console.log(isDark);
   
   return (
     <div onClick={onclick} className={"" + className}><label className="swap swap-rotate"  >

@@ -10,9 +10,9 @@ function Page() {
 
     <>
       <Aurora
-  colorStops={["#FFFFFF", "#97A4B5", "#1D232A"]}
+       colorStops={["#FFFFFF", "#97A4B5", "#1D232A"]}
         speed={0.5}
-        amplitude={0.4}
+        amplitude={0.2}
       />
       <Hellow></Hellow>
     </>

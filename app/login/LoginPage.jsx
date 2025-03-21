@@ -19,10 +19,11 @@ import { useId ,useState } from "react";
 
 export default function LoginPage({ children, setAlert }) {
 
-    const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [googleisLoading, setGoogleIsLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const id = useId();
   const { status : sessionStatus } = useSession();
@@ -43,13 +44,26 @@ export default function LoginPage({ children, setAlert }) {
         } 
   };
   
+
+  const handleGoogleLogin = async () => {
+
+    setGoogleIsLoading(true);
+
+    const result = await signIn("google", { callbackUrl: "/chatbot" })
+    if (result?.error) {
+      setError("somthing went wrong");
+      setGoogleIsLoading(false);
+    }
+
+    
+  }
   useEffect(() => {
     if (sessionStatus === "authenticated") {
       router.push("/chatbot"); 
     }
   }, [sessionStatus]);
 
-  console.log("zzzzzzzzzz");
+
 
   const handlePasswordReset = async () => {
     if (email) {
@@ -68,7 +82,8 @@ export default function LoginPage({ children, setAlert }) {
         
         setAlert({ Message :'Check your email' , type : 'alert-success'});
       } catch (error) {
-        console.error("Error:", error);
+      
+        setAlert({ Message :'somthing went wrong try again' , type : 'alert-success'});
       }
 
     } else {
@@ -153,10 +168,8 @@ export default function LoginPage({ children, setAlert }) {
           <span className="text-xs text-muted-foreground">Or</span>
         </div>
 
-        <Button className="bg-[#DB4437] text-white items-center  hover:bg-[#DB4437]/90" onClick={() => {
-          signIn("google", { callbackUrl: "/chatbot" })
-          setIsLoading(true);  }}>
-          {isLoading ? <span className="loading  loading-ring loading-md"></span> :
+          <Button className="bg-[#DB4437] text-white items-center  hover:bg-[#DB4437]/90" onClick={handleGoogleLogin}>
+          {googleisLoading ? <span className="loading  loading-ring loading-md"></span> :
             (<><span className="pointer-events-none me-2 ">
               <RiGoogleFill className="opacity-100" size={23} aria-hidden="true" />
             </span>

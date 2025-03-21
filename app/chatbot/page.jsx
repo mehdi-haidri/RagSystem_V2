@@ -6,7 +6,6 @@ import logo from "../assets/logo.png";
 import send2 from "../assets/send2.svg";
 import logoLight from "../assets/logoLight.png";
 import Chat from "../components/Chat";
-import Swap from "../components/Swap";
 import Menu from "../components/Menu";
 import { useSession } from "next-auth/react";
 import { Themes } from "../assets/Themes";
@@ -27,11 +26,9 @@ async function readStream(response, setMessages) {
   while (true) {
     const { value, done } = await reader.read();
     if (done) {
-      console.log("Stream finished");
       break;
     }
     const chunk = decoder.decode(value);
-    console.log("Stream chunk:", chunk);
     accumulatedText += chunk;
 
     // Update the last message with the new accumulated text.
@@ -52,31 +49,52 @@ async function readStream(response, setMessages) {
   return accumulatedText;
 }
 
+var doAlert ;
+
 const createChat = async (setCurrentChat, setMessages, user_id) => {
-  fetch("/api/chats", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id: user_id, label: "New Chat" }),
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      setCurrentChat(res.id);
-      setMessages([]);
-    });
+  try {
+    
+    const response  = await fetch("/api/chats", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: user_id, label: "New Chat" }),
+    })
+      
+    
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    setCurrentChat(data.id);
+    setMessages([]);
+
+
+  }catch (error) {
+    doAlert({ Message: "Something went wrong", type: "alert-warning" })
+  }
 };
-const createMessage = (role, message, chat_id) => {
-  fetch("/api/messages", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: chat_id, role: role, message: message }),
-  }).then((res) => console.log(res.json()));
+const createMessage = async (role, message, chat_id) => {
+  try {
+    
+    const response = await fetch("/api/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chat_id, role: role, message: message }),
+    })
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+  }catch (error) {
+    doAlert({ Message: "Something went wrong", type: "alert-warning" })
+  }
 };
 const getChats = async (
   setChats,
   setCurrentChat,
   setMessages,
   user_id,
-  setAlert,
   currentChat = null
 ) => {
   try {
@@ -90,9 +108,7 @@ const getChats = async (
         updateMessages(data.chats[0]._id, setCurrentChat, setMessages);
       }
     } else {
-      console.log("No chats found");
-
-      // 🛑 Prevent duplicate chat creation
+  
       const newChatRes = await fetch("/api/chats?user_id=" + user_id);
       const newChatData = await newChatRes.json();
 
@@ -102,7 +118,7 @@ const getChats = async (
     }
   } catch (error) {
     setChats([]);
-    setAlert({ Message: "Something went wrong", type: "alert-warning" });
+    doAlert({ Message: "Something went wrong", type: "alert-warning" });
   }
 };
 
@@ -115,7 +131,6 @@ const updateMessages = async (chat_id, setCurrentChat, setMessages) => {
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
-    console.log(data);
     setMessages(
       data.map((msg) => ({
         id: msg._id,
@@ -126,7 +141,7 @@ const updateMessages = async (chat_id, setCurrentChat, setMessages) => {
     );
     // setMessages(data.messages)
   } catch (error) {
-    console.error(error);
+    doAlert({ Message: "Something went wrong", type: "alert-warning" })
   }
 };
 
@@ -142,7 +157,7 @@ const updateChatLabel = async (chat_id, label) => {
       throw new Error("Network response was not ok");
     }
   } catch (error) {
-    console.error(error);
+    doAlert({ Message: "Something went wrong", type: "alert-warning" })
   }
 };
 
@@ -157,6 +172,7 @@ function Page() {
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
+  doAlert = setAlert;
   const {
     append,
     isLoading,
@@ -171,7 +187,7 @@ function Page() {
     onResponse: async (response) => {
       setShowLodingBubble(false);
       if (response.status !== 200) {
-        console.log("Error:", response.statusText);
+       setAlert({ Message: "Something went wrong", type: "alert-warning" })
         return;
       }
       const message = await readStream(response, setMessages);
@@ -179,31 +195,28 @@ function Page() {
       updateChatLabel(currentChat, message.slice(0, 40));
       getChats(setChats, setCurrentChat, setMessages, session.user.id, 1);
     },
-    onmouseenter: (message) => {
-      console.log(message);
-    },
+ 
   });
 
-  useEffect(() => {
-    // createChat();
 
+  useEffect(() => {
     if (status === "authenticated") {
       setTheme(Themes[session.user.theme])
       setIsDark(session.user.theme === "dark");
-
         getChats(
         setChats,
         setCurrentChat,
         setMessages,
         session.user.id,
-        setAlert
       );
-    }
+    } 
   }, [session?.user?.id]);
 
   useEffect(() => {
     ScrollDown();
   }, [messages]);
+
+
   const ScrollDown = () => {
     chatRef.current.scrollTo({
       top: chatRef.current.scrollHeight,
@@ -260,7 +273,7 @@ function Page() {
           (!isDark ? (
             <Image src={logoLight} alt="Logo" className="w-[45%]"  />
           ) : (
-            <Image src={logo} alt="Logo" className=" w-[45%]"  />
+            <Image priority={true} src={logo} alt="Logo" className=" w-[45%]"  />
           ))}
         {ConfirmedReport && (
           <div className="toast  absolute left-0 top-1 h-fit  w-fit">

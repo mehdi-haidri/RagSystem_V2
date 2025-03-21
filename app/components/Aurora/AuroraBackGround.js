@@ -127,7 +127,7 @@ export default function Aurora(props) {
     const renderer = new Renderer();
     const gl = renderer.gl;
     gl.clearColor(0.1, 0.1, 0.1, 1);
-    console.log("gl", gl);
+
     let program;
 
     function resize() {

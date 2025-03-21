@@ -1,4 +1,4 @@
-import { a } from "@react-spring/web";
+
 import GradientText from "./Aurora/GradientText";
 
 function NewChatPlaceHolder({ theme  , append ,createMessage , currentChat}){
@@ -12,7 +12,7 @@ function NewChatPlaceHolder({ theme  , append ,createMessage , currentChat}){
           colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
           animationSpeed={7}
           showBorder={false}
-          className="text-4xl "
+          className="text-2xl sm:text-4xl"
         >
         Hi, What can I help you with ?
         </GradientText>

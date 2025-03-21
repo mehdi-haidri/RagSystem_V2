@@ -15,7 +15,6 @@ function Chat({ messages , theme , isLoading }) {
   const [userPic, setUserPic] = useState(null)
   useEffect(() => {
   
-      console.log(session);
     if (session) {
         
       const image = new Image();

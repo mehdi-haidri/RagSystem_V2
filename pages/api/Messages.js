@@ -28,7 +28,7 @@ export async function POST(req) {
     }, { status: 201 });
 
   } catch (error) {
-    console.error("Error creating message:", error);
+    
     return Response.json({ error: 'Failed to create message' }, { status: 500 });
   }
 }

@@ -22,7 +22,7 @@ function Menu({ createChat, chats, updateMessages, currentChat, theme, setOpenDr
   return (
     <>
       <div className=" flex flex-row items-center p-2 justify-end w-full h-[5%]">
-         <Swap className={" p-2"} isDark={isDark} onclick={() => toggleTheme()}></Swap>
+         <Swap className={" h-[40px] w-[40px] "} isDark={isDark} onclick={() => toggleTheme()}></Swap>
       </div>
       <ul className={"menu w-[100%] overflow-x-scroll scrollbar-x-hide flex-nowrap h-[80%]  pt-6 relative "}>
        

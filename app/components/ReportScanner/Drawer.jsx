@@ -20,7 +20,6 @@ function Drawer({ setConfirmedReport, setAlert , theme}) {
       setIsLoading(false);
       return
     }
-    console.log(base64String);
 
     try {
         

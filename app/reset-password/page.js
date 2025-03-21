@@ -13,8 +13,6 @@ function page() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  console.log(token);
-  console.log(email);
 
   const handleResetPassword = async (e) => {
     setLoading(true);

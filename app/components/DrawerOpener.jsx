@@ -5,7 +5,6 @@ function DrawerOpener({className, setOpenDrawer}) {
       <label className={"btn btn-square swap swap-rotate " + className}>
     {/* this hidden checkbox controls the state */}
     <input type="checkbox"  onClick={() => {
-          console.log('open')
           setOpenDrawer(pre=> !pre)
         }} />
   

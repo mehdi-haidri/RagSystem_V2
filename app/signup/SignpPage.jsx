@@ -12,13 +12,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn   } from "next-auth/react";
+
+import { RiGoogleFill } from "@remixicon/react";
 
 
 export default function SignupPage({ children }) {
   const id = useId();
    const router = useRouter();
     const [formData, setFormData] = useState({ username: "", email: "", password: "" });
-    const [error, setError] = useState("");
+  const [error, setError] = useState("");
+    const [googleisLoading, setGoogleIsLoading] = useState(false);
+  
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e) => {
@@ -26,7 +31,6 @@ export default function SignupPage({ children }) {
   };
 
   const handleSubmit = async (e) => {
-    console.log("hi");
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -51,6 +55,20 @@ export default function SignupPage({ children }) {
     }
     setIsLoading(false)
   };
+
+
+    const handleGoogleLogin = async () => {
+  
+      setGoogleIsLoading(true);
+  
+      const result = await signIn("google", { callbackUrl: "/chatbot" })
+      if (result?.error) {
+        setError("somthing went wrong");
+        setGoogleIsLoading(false);
+      }
+  
+      
+    }
 
   return (
     <Dialog>
@@ -131,7 +149,14 @@ export default function SignupPage({ children }) {
           <span className="text-xs text-muted-foreground">Or</span>
         </div>
 
-        <Button variant="outline">Continue with Google</Button>
+        <Button className="bg-white text-black items-center  hover:bg-gray-200" onClick={handleGoogleLogin}>
+          {googleisLoading ? <span className="loading  loading-ring loading-md"></span> :
+            (<><span className="pointer-events-none me-2 ">
+              <RiGoogleFill className="opacity-100" size={23} aria-hidden="true" />
+            </span>
+          <p className="text-lg">Continue with Google</p> </>)
+          }
+        </Button>
 
         <p className="text-center text-xs text-muted-foreground">
           By signing up you agree to our{" "}
