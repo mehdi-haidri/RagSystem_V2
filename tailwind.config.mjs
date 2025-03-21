@@ -61,6 +61,18 @@ export default {
   },
   plugins: [
     daisyui,
-      require("tailwindcss-animate")
+	  require("tailwindcss-animate"),
+	  function ({ addUtilities }) {
+		addUtilities({
+			'.scrollbar-x-hide': {
+				'overflow-x': 'hidden', // Hides horizontal scrollbar
+			// Firefox
+				'&::-webkit-scrollbar:horizontal': {
+					display: 'none', // Chrome, Safari
+				},
+			}
+		});
+	  },
+	  
 ],
 };

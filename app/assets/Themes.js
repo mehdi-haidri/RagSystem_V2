@@ -10,7 +10,7 @@ export const Themes = {
         chatInputText: 'text-white',
         menuText: 'text-neutral-content',
         menuSelectedText : "text-white",
-        menuHover: 'hover:bg-base-600',
+        menuHover: 'hover:bg-base-300  [&.active]:bg-base-300',
         menuSelected: 'bg-base-100',
         logo: 'white',
         suggestionBackground: 'bg-[#323a44] hover:bg-base-200 transition duration-300 ease-in-out', 
@@ -39,7 +39,7 @@ export const Themes = {
         logoutModal: "bg-[#f0f4f9]",
         loadingState: "text-black",
         logoutModalButton: "bg-gray-300 text-black",
-         sendButton :"bg-[#1b4fac]"
+         sendButton :"bg-[#649af1]"
       },
 
 

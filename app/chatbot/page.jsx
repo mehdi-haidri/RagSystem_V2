@@ -13,6 +13,7 @@ import { Themes } from "../assets/Themes";
 import Drawer from "../components/ReportScanner/Drawer";
 import Alert from "../components/Alert";
 import NewChatPlaceHolder from "../components/NewChatPlaceHolder";
+import DrawerOpener from "../components/DrawerOpener";
 
 async function readStream(response, setMessages) {
   const reader = response.body.getReader();
@@ -220,17 +221,18 @@ function Page() {
 
     <div
       className={
-        "w-full h-screen   flex flex-row relative " + theme.chatBackground
+        "w-full h-[100dvh] flex flex-row relative " + theme.chatBackground
       }
     >
       {alert && (
         <Alert message={alert.Message} setAlert={setAlert} type={alert.type} />
       )}
       <nav
-        className={`  w-[300px] fixed top-0 left-0 z-40  sm:w-[350px] h-screen transition-transform    sm:translate-x-0 ${
+        className={` ${ theme.menuBackground} hover:scrollbar-red  w-[300px] fixed top-0 left-0 z-40  sm:w-[350px] h-[100dvh] transition-transform    sm:translate-x-0 ${
           openDrawer ? "translate-x-0" : "-translate-x-full"
-        }`}
+        } `}
       >
+        <DrawerOpener setOpenDrawer={setOpenDrawer} className={` sm:hidden border-0 absolute fixed top-0 right-[-45px] z-40 ${theme.menuBackground}`}></DrawerOpener>
         <Menu
           currentChat={currentChat}
           createChat={() =>
@@ -253,12 +255,7 @@ function Page() {
           theme.chatBackground
         }
       >
-        <Swap
-          className={"hidden sm:block absolute right-10 top-10 "}
-          onclick={() => toggleTheme()}
-          session={session}
-          isDark={isDark}
-        ></Swap>
+      
         {messages.length == 0 &&
           (!isDark ? (
             <Image src={logoLight} alt="Logo" className="w-[45%]"  />

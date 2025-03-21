@@ -21,9 +21,11 @@ function Menu({ createChat, chats, updateMessages, currentChat, theme, setOpenDr
   };
   return (
     <>
-      <ul className={"menu  w-[100%] h-screen pt-6 relative " + theme.menuBackground}>
-        <DrawerOpener setOpenDrawer={setOpenDrawer} className={`sm:hidden border-0 absolute fixed top-0 right-[-45px] z-40 ${theme.menuBackground}`}></DrawerOpener>
-        <Swap className={"sm:hidden"} isDark={isDark} onclick={() => toggleTheme()}></Swap>
+      <div className=" flex flex-row items-center p-2 justify-end w-full h-[5%]">
+         <Swap className={" p-2"} isDark={isDark} onclick={() => toggleTheme()}></Swap>
+      </div>
+      <ul className={"menu w-[100%] overflow-x-scroll scrollbar-x-hide flex-nowrap h-[80%]  pt-6 relative "}>
+       
       <li className={"mb-2 p-4  " + theme.menuSelected + " " + theme.menuSelectedText}>
         <a className={" font-semibold text-lg "+theme.menuHover} onClick={createChat}>
           <svg
@@ -92,11 +94,16 @@ function Menu({ createChat, chats, updateMessages, currentChat, theme, setOpenDr
 
 
 
-      <div className="flex w-full flex-col">
+     
+      
+      
+      </ul>
+
+      <div className="flex w-full h-[5%]    flex-col">
         <div className={"divider "+theme.menuDivider}></div>
       </div>
-      <li className={"mt-auto mb-5 p-2 "+theme.menuText }>
-          <button className={ theme.menuHover} onClick={()=>document.getElementById('my_modal_1').showModal()}>
+      <div className={"h-[10%] p-2 "+ theme.menuText}>
+          <button className={ ` btn ${ theme.menuHover } bg-transparent border-0  w-full flex flex-row text-center gap-2   rounded-md` } onClick={()=>document.getElementById('my_modal_1').showModal()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -117,10 +124,10 @@ function Menu({ createChat, chats, updateMessages, currentChat, theme, setOpenDr
           </svg>
           Logout
         </button>
-      </li>
-      
-      </ul>
-      
+      </div>
+
+
+
       <dialog id="my_modal_1" className="modal">
   <div className={"modal-box  top-0 left-0 right-0 bottom-0 "+ theme.logoutModal}>
     <h3 className="font-bold text-lg">Hello!</h3>

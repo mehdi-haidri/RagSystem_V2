@@ -19,7 +19,7 @@ function Swap({ onclick, className ,isDark}) {
   
  
     <svg
-        className={`  ${isDark ? "swap-on" : "swap-off"}  z-50 h-10 w-10 fill-current`}
+        className={`  ${isDark ? "swap-on" : "swap-off"} text-gray-600  z-50 h-10 w-10 fill-current`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24">
       <path
