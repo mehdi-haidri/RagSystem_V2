@@ -241,7 +241,7 @@ function Page() {
         <Alert message={alert.Message} setAlert={setAlert} type={alert.type} />
       )}
       <nav
-        className={` ${ theme.menuBackground} hover:scrollbar-red  w-[300px] fixed top-0 left-0 z-40  sm:w-[350px] h-[100dvh] transition-transform    sm:translate-x-0 ${
+        className={` ${ theme.menuBackground} hover:scrollbar-red  w-[300px] fixed top-0 left-0 z-50  sm:w-[350px] h-[100dvh] transition-transform    sm:translate-x-0 ${
           openDrawer ? "translate-x-0" : "-translate-x-full"
         } `}
       >
@@ -276,10 +276,10 @@ function Page() {
             <Image priority={true} src={logo} alt="Logo" className=" w-[45%]"  />
           ))}
         {ConfirmedReport && (
-          <div className="toast  absolute left-0 top-1 h-fit  w-fit">
-            <div className="alert  alert-success text-gray-800 px-2 py-1.5  font-semibold font-sans w-fit">
+          <div className="toast  absolute left-0 top-10 sm:top-1 h-fit  w-fit z-40">
+            <div className={`alert grid-flow-col  bg-green-400 border-0 text-gray-800 px-2 py-1.5  font-semibold font-sans w-fit`}>
               <svg
-                className="w-4 h-4 text-gray-800 "
+                className=" w-4 h-4  text-white "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -293,7 +293,19 @@ function Page() {
                   d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"
                 />
               </svg>
-              <p>Repport Added</p>
+              <p className="text-white text-sm">Repport Added </p>
+              <svg
+                  onClick={() => setConfirmedReport(null)}
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6 shrink-0 stroke-current text-gray-300 rounded hover:text-gray-600"
+    fill="none"
+    viewBox="0 0 24 24">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
             </div>
           </div>
         )}

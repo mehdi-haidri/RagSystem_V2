@@ -2,7 +2,7 @@ import { useSprings, animated } from '@react-spring/web';
 import { useEffect, useRef, useState } from 'react';
 import GradientText from './GradientText';
 
-const SplitText = ({
+const SplitGradiantText = ({
     showBorder=false,
   text = '',
   className = '',
