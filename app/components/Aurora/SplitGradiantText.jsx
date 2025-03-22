@@ -90,4 +90,4 @@ const SplitGradiantText = ({
   );
 };
 
-export default SplitText;
+export default SplitGradiantText;
