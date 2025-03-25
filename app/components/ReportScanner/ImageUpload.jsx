@@ -6,6 +6,7 @@ import { useState } from "react";
 function ImageUpload({ setBase64Data, setAlert }) {
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [pdfName , setPdfName] = useState("")
   const handleFileChange = (e) => {
     const file = e;
     if (!file) return;
@@ -49,6 +50,8 @@ function ImageUpload({ setBase64Data, setAlert }) {
         setBase64Data(base64String);
       };
       reader.readAsDataURL(file);
+      setPdfName(file.name)
+      setFile(null)
     }
   };
 
@@ -137,7 +140,11 @@ function ImageUpload({ setBase64Data, setAlert }) {
           {file ? (
             <Rr src={file} width={150} height={150} alt="image" />
           ) : (
-              !isDragging && (
+             
+              pdfName ? (
+                <p className=" text-lg text-gray-500 " > {pdfName}</p>
+              ):
+              (!isDragging && (
                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
                 className="select-none w-9 h-9 mb-4 text-gray-500 dark:text-gray-400"
@@ -162,7 +169,7 @@ function ImageUpload({ setBase64Data, setAlert }) {
                 SVG, PNG, JPG , GIF or PDF{" "}
               </p>
             </div>
-              )
+              ))
  
           )}
           <input
